@@ -36,3 +36,4 @@ https://www.youtube.com/watch?v=IUAJmUBucY8</br>
 
 https://www.postgresql.org/docs/9.1/libpq.html</br>
 https://www.postgresql.org/docs/current/libpq-example.html</br>
+https://askubuntu.com/questions/1372562/how-to-install-libpq-dev-14-0-1-on-ubuntu-21-10</br>
