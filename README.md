@@ -1,5 +1,7 @@
 guia shells</br>
 https://ss64.com/</br>
+dos(cmd)</br>
+https://datacadamia.com/lang/dos/redirection</br>
 
 C Programming Tutorial for Beginners</br>
 https://www.youtube.com/watch?v=KJgsSFOSQv0</br>
