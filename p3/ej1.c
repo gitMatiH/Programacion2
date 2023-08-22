@@ -2,7 +2,7 @@
 #define n 3
 
 int cargarMatriz(int matriz[n][n]);
-//int itemA();
+int itemA(int matriz[n][n]);
 /*
 int itemB();
 int itemC();
@@ -16,8 +16,14 @@ int itemH();
 int main(void)
 {
 	int matriz[n][n];
+	int item_a;
+	int sumatoria;
+
 	cargarMatriz(matriz);
-	//itemA();
+
+	item_a = itemA(matriz);
+	printf("La sumatoria de los elementos de la segunda fila es: %d", item_a);
+
 	/*
 	itemB();
 	itemC();
@@ -45,11 +51,16 @@ int cargarMatriz(int matriz[n][n])
 		j = 0;
 		i = i + 1;
 	}
-
+	return 0;
 }
-/*
-int itemA()
+
+int itemA(int matriz[n][n])
 {
-
+	int sumatoria=0;
+	int i = 1, j = 0;
+	while (j < n) {
+		sumatoria = sumatoria + matriz[i][j];
+		j++;
+	}
+	return sumatoria;
 }
-*/
