@@ -3,3 +3,5 @@ GuiasProg2.sln
 GuiasProg2.vcxproj
 GuiasProg2.vcxproj.filters
 GuiasProg2.vcxproj.user
+compilaciones
+*.exe
