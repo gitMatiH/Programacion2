@@ -13,7 +13,7 @@ int main() {
 
     printf("Ingrese los siguientes datos (Ingrese ceros para salir):\n");
 
-    while (1) {     //estas forzando un loop infinito!!
+    while (1) {     //estas forzando un loop infinito!! la condicion de corte seria edad==0 && sueldo==0
 
         // copia este ingreso antes de entrar al while y al final antes de terminar el ciclo while y probalo :D
         // (y sacalo de aca al ppio)
