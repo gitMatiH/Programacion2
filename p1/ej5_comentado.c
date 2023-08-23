@@ -17,35 +17,35 @@ int main() {
         printf("Ingrese su edad: ");
         scanf("%d", &edad);
 
-        if (edad == 0) {    // habrás querido decir != 0 ? para validar?
+        if (edad == 0) {    // habrÃ¡s querido decir != 0 ? para validar?
 
             printf("Ingrese su sueldo: ");
             scanf("%f", &sueldo);
 
             if(sueldo == 0){
-            break;  //pero así sale del while, y no sigue preguntando por datos validos
+            break;  //pero asÃ­ sale del while, y no sigue preguntando por datos validos
             }
         }
 
         printf("Ingrese su sueldo: ");
         scanf("%f", &sueldo);
 
-        total++;    // no se entiende a qué cosa le acumula el total
+        total++;    // no se entiende a quÃ© cosa le acumula el total
 
         // A) PROMEDIO
         if (sueldo > 100000) {
-            cont++;     // qué cuenta? algo relacionado a a?
+            cont++;     // quÃ© cuenta? algo relacionado a a?
             sum = sum + edad;
         }
 
         // B) SUELDO MAYORES DE 58 ANIOS
         if (edad > 58) {
-            cont_e++;   // por qué contador_e? no estamos en el punto b?
+            cont_e++;   // por quÃ© contador_e? no estamos en el punto b?
             plus = sueldo + (sueldo * 0.05);
         }
 
         // C) PORCENTAJE DE EMPLEADOS
-        if (sueldo < 15000) {   //me gustó como los nombraste acá
+        if (sueldo < 15000) {   //me gustÃ³ como los nombraste acÃ¡
             sueldo_uno++;
         } else if (sueldo >= 15000 && sueldo <= 20000) {
             sueldo_dos++;
@@ -54,8 +54,7 @@ int main() {
         }
     }
 
-    // ojo que lo que viene acá debería estar fuera del ciclo while!!!
-    // te animás a modularizarlo con funciones?
+    // te animÃ¡s a modularizarlo con funciones?
 
     // A) Calcular el promedio solo si hay empleados con sueldo mayor a 100000
     if (cont > 0) {
