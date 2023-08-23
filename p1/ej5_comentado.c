@@ -14,21 +14,26 @@ int main() {
     printf("Ingrese los siguientes datos (Ingrese ceros para salir):\n");
 
     while (1) {     //estas forzando un loop infinito!!
+
+        // copia este ingreso antes de entrar al while y al final antes de terminar el ciclo while y probalo :D
+        // (y sacalo de aca al ppio)
+        //COPIAR
         printf("Ingrese su edad: ");
         scanf("%d", &edad);
 
-        if (edad == 0) {    // habrás querido decir != 0 ? para validar?
+        if (edad == 0) {
 
             printf("Ingrese su sueldo: ");
             scanf("%f", &sueldo);
 
             if(sueldo == 0){
-            break;  //pero así sale del while, y no sigue preguntando por datos validos
+            break;
             }
         }
 
         printf("Ingrese su sueldo: ");
         scanf("%f", &sueldo);
+        //COPIAR
 
         total++;    // no se entiende a qué cosa le acumula el total
 
