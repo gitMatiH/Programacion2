@@ -21,7 +21,9 @@ int main(){
         while(c==' '){
             c=getchar();
         }
-        longitud_palabra = 1;
+        if (c!='.'){
+            longitud_palabra = 1;
+        }
         
         aux=c;
         c=getchar();
@@ -37,6 +39,7 @@ int main(){
         if (1<longitud_palabra){
             putchar(c);
         }
+        longitud_palabra = 0;
 
     }
     return 0;
