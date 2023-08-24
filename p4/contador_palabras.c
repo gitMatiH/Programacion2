@@ -1,6 +1,6 @@
-#include <stdlib.h> /*la nueva libreria*/
+//#include <stdlib.h> /*la nueva libreria*/
 #include <stdio.h>
-#include <string.h>
+//#include <string.h>
 
 int main(){
 
