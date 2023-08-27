@@ -30,7 +30,20 @@ int main() {
 }
 
 int itemA(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50], float saldo[50]) {
+	
+	//muestra primeros dos datos de input.txt
+	printf("%d\n", nro_cuenta[0]);
+	printf("%s\n", nombre_apellido[0]);
+	printf("%d\n", tipo_cuenta[0]);
+	printf("%f\n", saldo[0]);
 
+	printf("%d\n", nro_cuenta[1]);
+	printf("%s\n", nombre_apellido[1]);
+	printf("%d\n", tipo_cuenta[1]);
+	printf("%f\n", saldo[1]);
+	
+
+	/*
 	ordenarDatos(nro_cuenta, nombre_apellido, tipo_cuenta, saldo);
 
 	int i = 0;
@@ -42,6 +55,7 @@ int itemA(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50],
 		printf("%f\n", saldo[i]);
 		i++;
 	}
+	*/
 
 	
 	return 0;
@@ -119,7 +133,9 @@ int cargarDatos(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuent
 	while (cuenta != 0) {
 		nro_cuenta[i] = cuenta;
 
-		fflush(stdin);	// sino se queda con el \n del paso anterior
+		//fflush(stdin);	// sino se queda con el \n del paso anterior (sirve para ingreso manual porque lee del stdin). Tendríamos que hacer de stdin a donde sea q apunte scanf
+							//seria algo del tipo if ingresoManual fflush(stdin) else scanf
+		scanf(" ");			// para cuando lee de un archivo así se "come" el \n que queda trabado en el archivo. debe haber una mejor manera de hacer esto..
 		printf("Ingrese nombre y apellido del cliente: ");
 		gets(nombre);
 		while (25 < strlen(nombre) + 1) {	//+1 porque las cadenas terminan en \0
@@ -151,6 +167,7 @@ int cargarDatos(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuent
 			printf("Ingrese cuenta del cliente, 0 para terminar carga: ");
 			scanf("%d", &cuenta);
 		}
+		printf("\n");
 	}
 	return 0;
 }
