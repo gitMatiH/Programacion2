@@ -18,7 +18,7 @@ int main() {
 	float saldo[50];
 
 	cargarDatos(nro_cuenta, nombre_apellido, tipo_cuenta, saldo);
-
+	
 	itemA(nro_cuenta, nombre_apellido, tipo_cuenta, saldo);
 	/*
 	itemB();
@@ -30,7 +30,7 @@ int main() {
 }
 
 int itemA(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50], float saldo[50]) {
-
+	
 	//muestra primeros dos datos de input.txt
 	printf("%d\n", nro_cuenta[0]);
 	printf("%s\n", nombre_apellido[0]);
@@ -41,7 +41,7 @@ int itemA(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50],
 	printf("%s\n", nombre_apellido[1]);
 	printf("%d\n", tipo_cuenta[1]);
 	printf("%f\n", saldo[1]);
-
+	
 
 	/*
 	ordenarDatos(nro_cuenta, nombre_apellido, tipo_cuenta, saldo);
@@ -57,7 +57,7 @@ int itemA(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50],
 	}
 	*/
 
-
+	
 	return 0;
 }
 
@@ -66,12 +66,12 @@ int ordenarDatos(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuen
 	int j = 50;
 	//int aOrdenar;
 	//aOrdenar = nro_cuenta[i];
-	while (0 < j) {
+	while (0 < j){
 		while (i < j) {
 			if (nro_cuenta[i] > nro_cuenta[i + 1]) {
 				/*se podrían meter los cuatro intercambiar en un intercambiar gral que se fije por tipo. ¿cómo se hace esto correctamente?*/
 				intercambiar_int(&nro_cuenta[i], &nro_cuenta[i + 1]);
-				intercambiar_string(nombre_apellido[i], nombre_apellido[i + 1]);
+				intercambiar_string(nombre_apellido[i], nombre_apellido[i+1]);
 				intercambiar_int(&tipo_cuenta[i], &tipo_cuenta[i + 1]);
 				intercambiar_float(&saldo[i], &saldo[i + 1]);
 			}
@@ -83,7 +83,7 @@ int ordenarDatos(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuen
 }
 
 int intercambiar_int(int* int1, int* int2) {
-
+	
 	int aux;
 	aux = *int1;
 	*int1 = *int2;
@@ -121,13 +121,13 @@ int cargarDatos(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuent
 	int tipo;
 	float monto;
 
-	int i = 0;
+	int i=0;
 	printf("Ingrese cuenta del cliente, 0 para terminar carga: ");
-	scanf("%d", &cuenta);
+	scanf("%d", & cuenta);
 	while (cuenta < 0) {
 		printf("Error, dato invalido. ");
 		printf("Ingrese cuenta del cliente, 0 para terminar carga: ");
-		scanf("%d", &cuenta);
+		scanf("%d", & cuenta);
 	}
 
 	while (cuenta != 0) {
@@ -147,7 +147,7 @@ int cargarDatos(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuent
 
 		printf("Ingrese tipo de cuenta del cliente: ");
 		scanf("%d", &tipo);
-		while (!(tipo == 1 || tipo == 2)) {
+		while ( !(tipo == 1 || tipo == 2) ) {
 			printf("Error, codigo invalido. ");
 			printf("Ingrese tipo de cuenta del cliente: ");
 			scanf("%d", &tipo);
@@ -158,7 +158,7 @@ int cargarDatos(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuent
 		scanf("%f", &monto);
 		saldo[i] = monto;
 
-
+	
 		i = i + 1;
 		printf("Ingrese cuenta del cliente, 0 para terminar carga: ");
 		scanf("%d", &cuenta);
