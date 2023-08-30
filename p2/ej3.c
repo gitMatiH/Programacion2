@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_MEMORIA_CUENTAS 50
+
 int cargarDatos(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50], float saldo[50]);
 
 int itemA(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50], float saldo[50]);
@@ -14,6 +16,8 @@ int intercambiar_float(float* float1, float* float2);
 int itemB(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50], float saldo[50]);
 int buscarLineal(float saldo[50]);
 
+int itemD(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50], float saldo[50]);
+
 
 
 int main() {
@@ -23,16 +27,43 @@ int main() {
 	int tipo_cuenta[50];
 	float saldo[50];
 
+	//inicializarBD(nro_cuenta, nombre_apellido, tipo_cuenta, saldo)
+
 	cargarDatos(nro_cuenta, nombre_apellido, tipo_cuenta, saldo);
 
 	itemA(nro_cuenta, nombre_apellido, tipo_cuenta, saldo);
 	itemB(nro_cuenta, nombre_apellido, tipo_cuenta, saldo);
-	/*
-	itemC();
-	itemD();
-	itemE();
-	*/
+	//itemC();
+	itemD(nro_cuenta, nombre_apellido, tipo_cuenta, saldo);
+	//itemE();
 
+}
+
+int itemD(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50], float saldo[50]) {
+	float porcentaje;
+	porcentaje = calcularPorcentajeArray();
+	printf("El porcentaje de clientes que tienen un saldo mayor a 100 000: %f", porcentaje)
+	return 0;
+}
+
+float calcularPorcentajeArray() {
+	int acumulador_parte=0;
+	int acumulador_total=0;
+	while !(finArray) {
+		if cond_parte{
+			acumulador_parte = acumulador_parte + 1;
+		}
+		acumulador_total = acumulador_total + 1;
+		arr.siguiente();
+
+	}
+	float calcularPorcentaje((float)parte, (float)total);
+}
+
+float calcularPorcentaje(float parte, float total) {
+	float porcentaje;
+	porcentaje = parte * 100 / total;
+	return porcentaje;
 }
 
 int itemB(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50], float saldo[50]) {
