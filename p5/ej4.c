@@ -62,7 +62,7 @@ int main() {
 	}
 
 	max = VALOR;
-	res = multiplicarVectRec(vector, 1, max);
+	res = multiplicarVectRec(vector, 0, max);
 	printf("El resultado de la productoria de los elementos del vector es: %d", res);
 
 
