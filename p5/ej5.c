@@ -33,6 +33,8 @@ A e m*n, B e n*p, C e m*p
 
 ******************
 
+def de prod matriz
+
 */
 
 #include <stdio.h>
