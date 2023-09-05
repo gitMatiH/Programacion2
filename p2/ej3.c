@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_MEMORIA_CUENTAS 50
+#define MAX_MEMORIA_CUENTAS 50	//no usar defines para esta materia
 
 int cargarDatos(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuenta[50], float saldo[50]);
 
@@ -129,7 +129,7 @@ int ordenarDatos(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuen
 		int j = 0;
 		while (j < 50 - ( 1 + i)) {
 			if (nro_cuenta[j] > nro_cuenta[j + 1]) {
-				/*se podrían meter los cuatro intercambiar en un intercambiar gral que se fije por tipo. ¿cómo se hace esto correctamente?*/
+				/*se podrÃ­an meter los cuatro intercambiar en un intercambiar gral que se fije por tipo. Â¿cÃ³mo se hace esto correctamente?*/
 				intercambiar_int(&nro_cuenta[j], &nro_cuenta[j + 1]);
 				intercambiar_string(nombre_apellido[j], nombre_apellido[j + 1]);
 				intercambiar_int(&tipo_cuenta[j], &tipo_cuenta[j + 1]);
@@ -153,7 +153,7 @@ int intercambiar_int(int* int1, int* int2) {
 }
 
 int intercambiar_string(char* string1, char* string2) {
-	//precondicion: los arreglos de caracteres deben tener el mismo tamaño maximo
+	//precondicion: los arreglos de caracteres deben tener el mismo tamaÃ±o maximo
 
 	char* aux = (char*)malloc((strlen(string1) + 1) * sizeof(char));
 	strcpy(aux, string1);
@@ -193,9 +193,9 @@ int cargarDatos(int nro_cuenta[50], char nombre_apellido[50][25], int tipo_cuent
 	while (cuenta != 0) {
 		nro_cuenta[i] = cuenta;
 
-		//fflush(stdin);	// sino se queda con el \n del paso anterior (sirve para ingreso manual porque lee del stdin). Tendríamos que hacer de stdin a donde sea q apunte scanf
+		//fflush(stdin);	// sino se queda con el \n del paso anterior (sirve para ingreso manual porque lee del stdin). TendrÃ­amos que hacer de stdin a donde sea q apunte scanf
 							//seria algo del tipo if ingresoManual fflush(stdin) else scanf
-		scanf(" ");			// para cuando lee de un archivo así se "come" el \n que queda trabado en el archivo. debe haber una mejor manera de hacer esto..
+		scanf(" ");			// para cuando lee de un archivo asÃ­ se "come" el \n que queda trabado en el archivo. debe haber una mejor manera de hacer esto..
 		printf("Ingrese nombre y apellido del cliente: ");
 		gets(nombre);
 		while (25 < strlen(nombre) + 1) {	//+1 porque las cadenas terminan en \0
