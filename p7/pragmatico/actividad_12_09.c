@@ -62,13 +62,13 @@ int ordenarRanking(rankingProducto rankingProductos[1000], int cantProductos);
 int intercambiar_struct(rankingProducto* rankingProductosA, rankingProducto* rankingProductosB);
 
 
-int crearListaTicket(nodoListaProductos* listaCarrito, nodoListaTicket* listaTicket);
+int crearListaTicket(nodoListaProductos* listaCarrito, nodoListaTicket** listaTicket);
 
 
 int buscarProducto(infoProducto infoProductos[1000], int cantProductos, int codProducto);
 int existeProducto(infoProducto infoProductos[1000], int cantProductos, int codProducto);
 int hayStock(infoProducto infoProductos[1000], int cantProductos, int codProducto);
-int agregarCarrito(infoProducto infoProductos[1000], int indice, nodoListaProductos* listaCarrito, int cant);
+int agregarCarrito(infoProducto infoProductos[1000], int indice, nodoListaProductos** listaCarrito, int cant);
 int sacarDeStock(infoProducto infoProductos[1000], int indice, int cant);
 
 
@@ -214,7 +214,7 @@ int atenderCliente(int* nroCliente, int* contadorClientes, infoProducto infoProd
 	//arma el carrito del cliente con una lista y saca los correspondientes al array
 	printf("ingrese codigo del producto, 0 para terminar: ");
 	scanf("%d", &codProducto);
-	while (codProducto == 0 && !existeProducto(infoProductos, *cantProductos, codProducto) && !hayStock(infoProductos, *cantProductos, codProducto) ) {
+	while (codProducto == 0 || !existeProducto(infoProductos, *cantProductos, codProducto) || !hayStock(infoProductos, *cantProductos, codProducto) ) {
 		if (codProducto == 0) {
 			printf("debe llevar al menos un producto.\n");
 			printf("ingrese codigo del producto, 0 para terminar: ");
@@ -243,7 +243,9 @@ int atenderCliente(int* nroCliente, int* contadorClientes, infoProducto infoProd
 			scanf("%d", &cant);
 		}
 
-		agregarCarrito(infoProductos, indice, listaCarrito, cant);
+		printf("\n%p\n", listaCarrito);
+		agregarCarrito(infoProductos, indice, &listaCarrito, cant);
+		printf("\n%p\n", listaCarrito);
 		
 		
 		sacarDeStock(infoProductos, indice, cant);
@@ -252,17 +254,19 @@ int atenderCliente(int* nroCliente, int* contadorClientes, infoProducto infoProd
 		cant_productos_carrito = cant_productos_carrito + 1;
 
 		printf("ingrese codigo del producto, 0 para terminar: ");
-		scanf("%d", codProducto);
-		while (!existeProducto(infoProductos, *cantProductos, codProducto) && !hayStock(infoProductos, *cantProductos, codProducto)) {
+		scanf("%d", &codProducto);
+		while (codProducto != 0 && (!existeProducto(infoProductos, *cantProductos, codProducto) || !hayStock(infoProductos, *cantProductos, codProducto) ) ) {
 			printf("producto no disponible.\n");
 			printf("ingrese codigo del producto, 0 para terminar: ");
+			scanf("%d", &codProducto);
 		}
 	}
 	
 
 	//prepara una lista de cant x precio (listaticket)
 	//si no existe en la lista, crea nodo y agrega, sino, agrega a existente (modifica elemento)
-	crearListaTicket(listaCarrito, listaTicket);
+	//si no me sale hacer directo imprimir ticket con la cuenta
+	crearListaTicket(listaCarrito, &listaTicket);
 
 
 	//imprime esa lista, actualiza el ranking y la borra
@@ -303,13 +307,15 @@ int buscarProducto(infoProducto infoProductos[1000], int cantProductos, int codP
 	return i;
 }
 
-int agregarCarrito(infoProducto infoProductos[1000], int indice, nodoListaProductos* listaCarrito, int cant) {
-
+int agregarCarrito(infoProducto infoProductos[1000], int indice, nodoListaProductos** listaCarrito, int cant) {
+	
 	nodoListaProductos* elementoNuevo;
-	printf("holii");
-	if (listaCarrito == NULL)
+	elementoNuevo = (nodoListaProductos*)malloc(sizeof(nodoListaProductos));
+	
+	printf("\n%p\n", *listaCarrito);
+	if (*listaCarrito == NULL)
 	{
-		elementoNuevo = (nodoListaProductos*)malloc(sizeof(nodoListaProductos));
+		
 		//insertarPrincipio(listaDisponibles, elementoNuevo)
 		elementoNuevo->datos.id = infoProductos[indice].id;
 		//puts
@@ -318,12 +324,11 @@ int agregarCarrito(infoProducto infoProductos[1000], int indice, nodoListaProduc
 		elementoNuevo->datos.cantidad = infoProductos[indice].cantidad;
 		elementoNuevo->siguiente = NULL;
 
-		listaCarrito = elementoNuevo;
-		printf("soy un elemento nuevo");
+		*listaCarrito = elementoNuevo;
+		printf("\n%p\n", *listaCarrito);
 	}
 	else {
 		
-		elementoNuevo = (nodoListaProductos*)malloc(sizeof(nodoListaProductos));
 		//insertarPrincipio(listaDisponibles, elementoNuevo)
 		elementoNuevo->datos.id = infoProductos[indice].id;
 		//puts
@@ -333,13 +338,13 @@ int agregarCarrito(infoProducto infoProductos[1000], int indice, nodoListaProduc
 		elementoNuevo->siguiente = NULL;
 
 		//inserta ppio
-		elementoNuevo->siguiente = listaCarrito;
-		listaCarrito = elementoNuevo;
+		elementoNuevo->siguiente = *listaCarrito;
+		*listaCarrito = elementoNuevo;
 		printf("soy otro elemento nuevo");
 	}
 }
 
-int crearListaTicket(nodoListaProductos* listaCarrito, nodoListaTicket* listaTicket) {
+int crearListaTicket(nodoListaProductos* listaCarrito, nodoListaTicket** listaTicket) {
 	
 	int esta;
 
@@ -351,31 +356,34 @@ int crearListaTicket(nodoListaProductos* listaCarrito, nodoListaTicket* listaTic
 
 	nodoListaProductos* pActualListaCarrito = NULL;
 	nodoListaTicket* pActualListaTicket = NULL;
-	nodoListaTicket* nodoNuevo = NULL;
-
+	nodoListaTicket* nodoNuevo;
 
 	if (listaCarrito != NULL) {
 		//crear nuevo nodo para listaTicket y engancharlo
 		pActualListaCarrito = listaCarrito;
-
 		while (listaCarrito->siguiente != NULL) {
-
-
-
 			//buscar si esta en listaTicket
 			esta = 0;
-			pActualListaTicket = listaTicket;
-			if (pActualListaTicket->datos.id == pActualListaCarrito->datos.id) {
-				esta = 1;
-			}
-			while (listaTicket->siguiente != NULL && !esta) {
+			if (*listaTicket != NULL) {
+				printf("%p\n", *listaTicket);//ojo listaTicket apunta a null si entro por primera vez
+				pActualListaTicket = *listaTicket;
 				if (pActualListaTicket->datos.id == pActualListaCarrito->datos.id) {
 					esta = 1;
+					printf("entro1");
+				}
+				while (pActualListaTicket->siguiente != NULL && esta == 0) {
+					if (pActualListaTicket->datos.id == pActualListaCarrito->datos.id) {
+						esta = 1;
+						printf("entro2");
+					}
+					//me faltaba actualizar
+					pActualListaTicket = (*listaTicket)->siguiente;
 				}
 			}
 			// si NO, 
 			//crear nuevo nodo para listaTicket y engancharlo
-			if (!esta) {
+			if (esta == 0) {
+				printf("entro no\n");
 				nodoNuevo = (nodoListaTicket*)malloc(sizeof(nodoListaTicket));
 				nodoNuevo->datos.id = pActualListaCarrito->datos.id;
 				//nodoNuevo->datos.nombre = pActualListaCarrito->datos.nombre;
@@ -384,25 +392,27 @@ int crearListaTicket(nodoListaProductos* listaCarrito, nodoListaTicket* listaTic
 				nodoNuevo->datos.cantidad = pActualListaCarrito->datos.cantidad;
 				nodoNuevo->datos.total = precio*cantidad;
 				nodoNuevo->siguiente = NULL;
-				if (listaTicket == NULL) {
-					listaTicket = nodoNuevo;
+				if (*listaTicket == NULL) {
+					*listaTicket = nodoNuevo;
 				}
 				else {
-					nodoNuevo->siguiente = listaTicket;
-					listaTicket = nodoNuevo;
+					nodoNuevo->siguiente = *listaTicket;
+					*listaTicket = nodoNuevo;
 				}
 			}
 
 			// si SI,
 			//sumarle la cantidad y hacer sumar al total el precio*cant
 			if (esta) {
+				printf("entro si\n");
 				pActualListaTicket->datos.cantidad = pActualListaTicket->datos.cantidad + cantidad;
 				pActualListaTicket->datos.total = pActualListaTicket->datos.total + precio * cantidad;
 			}
 
 
-
+			printf("preitero\n");
 			pActualListaCarrito = pActualListaCarrito->siguiente;
+			printf("itero\n");
 		}
 
 
