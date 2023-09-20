@@ -23,13 +23,15 @@ typedef struct listaDeFichas {
 //funciones de tipo insertar
 nodoListaDeFichas* insertarNodoPpio(listaDeFichas* pLF);
 nodoListaDeFichas* insertarNodoFinal(listaDeFichas* pLF);
+int insertarEnPos(listaDeFichas* pLF, int posicion, nodoListaDeFichas* nodoNuevo);
 
 //funciones de tipo eliminar
 int eliminarNodoPpio(listaDeFichas* pLF);
 int eliminarNodoFinal(listaDeFichas* pLF);
 
-//funciones de tipo inicializar
+//funciones de tipo inicializar/crear
 listaDeFichas* crearListaDeFichas(void);
+nodoListaDeFichas* crearNodoListaDeFichas(void);
 
 //funciones de tipo mostrar
 int mostrarLista(listaDeFichas* pLF);
@@ -40,7 +42,9 @@ int mostrarListaW(nodoListaDeFichas* nLF);
 // Lista TODO de funciones: 
 // 
 //int ordenarLista()
-//int insertarEnPos(posx)
+// va a usar:
+//int intercambiarElemLista()
+// 
 //int eliminarEnPos(posx)
 //int eliminar( fcioncond)
 //int existe(elemento)
@@ -290,4 +294,56 @@ int eliminarNodoPpio(listaDeFichas* pLF) {
 
 	
 	return 0;
+}
+
+
+
+
+int insertarEnPos(listaDeFichas* pLF, int posicion, nodoListaDeFichas* nodoNuevo) {
+	
+	int pos;
+
+	if (pLF->cantElementos < posicion || posicion < 1) {
+		// validar e imprimir medio que se estaria saliendo de las responsabilidades de insertarEnPos
+		// -> oportunidad de refactoring
+		printf("posicion invalida");
+		return 0;
+	}
+	else {	//posicion valida
+		//se posiciona
+		pLF->actual = pLF->cabecera;
+		pos = 1;
+		while ( pos != (posicion-1) ) {//??
+		
+			pLF->actual = pLF->actual->siguiente;
+			pos = pos + 1;
+		}
+
+	}
+
+
+
+}
+
+nodoListaDeFichas* crearNodoListaDeFichas(void) {
+
+	int codigoPersona, edad;
+
+	nodoListaDeFichas* nuevoNodo;
+	nuevoNodo = (nodoListaDeFichas*)malloc(sizeof(nodoListaDeFichas));
+
+	//ingreso datos al nodo / o lo inicializo, podemos poner algo por default tb
+	printf("ingrese codigo persona: ");
+	scanf("%d", &codigoPersona);
+	nuevoNodo->ficha.codPersona = codigoPersona;
+
+	printf("ingrese edad persona: ");
+	scanf("%d", &edad);
+	nuevoNodo->ficha.edad = edad;
+
+	nuevoNodo->siguiente = NULL;
+
+
+	return nuevoNodo;
+
 }
