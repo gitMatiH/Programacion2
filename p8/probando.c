@@ -29,6 +29,10 @@ typedef struct listaDeFichas {
 }listaDeFichas;
 
 nodoListaDeFichas* insertarNodoPpio(listaDeFichas* pLF);
+nodoListaDeFichas* insertarNodoFinal(listaDeFichas* pLF);
+
+
+listaDeFichas* crearListaDeFichas(void);
 
 int mostrarLista(listaDeFichas* pLF);
 int mostrarListaR(nodoListaDeFichas* nLF);
@@ -45,19 +49,25 @@ int mostrarListaW(nodoListaDeFichas* nLF);
 
 int main(void) {
 
-	//crearLista()
-	listaDeFichas* planilla;
-	planilla = (listaDeFichas*)malloc(sizeof(listaDeFichas));
-	planilla->cabecera = NULL;
-	planilla->actual = NULL;
+	//es una planilla
+	listaDeFichas* planilla;			// es un puntero a lista de fichas
+	planilla = crearListaDeFichas();
 
-	printf("%p", planilla->cabecera);
+	//es otra planilla
+	listaDeFichas* planilla2 = crearListaDeFichas();
+	
+	printf("%p\n", planilla->cabecera);
+	printf("%p\n", planilla2->cabecera);
 
 
-	//planilla = (listaDeFichas*)malloc(sizeof(listaDeFichas));
 	insertarNodoPpio(planilla);
 	insertarNodoPpio(planilla);
+	insertarNodoFinal(planilla);
 	mostrarLista(planilla);
+
+	insertarNodoFinal(planilla2);
+	mostrarLista(planilla2);
+
 
 	/*
 	//struct ficha f1;
@@ -67,7 +77,22 @@ int main(void) {
 	printf("codigo %d\n", f1.codPersona);
 	printf("edad %d\n", f1.edad);
 	*/
+
+
+	printf("\nFIN PROGRAMA\n");
+	return 0;
 }
+
+listaDeFichas* crearListaDeFichas(void) {
+	listaDeFichas* lista;
+	// claro, si no le devuelvo esa dir de memoria afuera no aparece. Funcionaba igual
+	// porque le llegaba una lista con algo, pero nunca llegaba a null
+	lista = (listaDeFichas*)malloc(sizeof(listaDeFichas));
+	lista->cabecera = NULL;
+	lista->actual = NULL;
+	return lista;
+}
+
 
 nodoListaDeFichas* insertarNodoPpio(listaDeFichas* pLF) {
 	
@@ -89,7 +114,7 @@ nodoListaDeFichas* insertarNodoPpio(listaDeFichas* pLF) {
 		// significa que la lista vino vacia
 		pLF->cabecera = nuevoNodo;
 
-		printf("entre en null\n");
+		//printf("entre en null\n");
 	}
 	else
 		// (pLF->cabecera != NULL) 
@@ -97,7 +122,7 @@ nodoListaDeFichas* insertarNodoPpio(listaDeFichas* pLF) {
 		// significa que la lista tiene elementos
 		nuevoNodo->siguiente = pLF->cabecera;
 		pLF->cabecera = nuevoNodo;
-		printf("entre en !null\n");
+		//printf("entre en !null\n");
 	}
 
 }
@@ -107,8 +132,8 @@ int mostrarLista(listaDeFichas* pLF) {
 	
 	pLF->actual = pLF->cabecera;
 
-	mostrarListaR(pLF->actual);
-	//mostrarListaW(pLF->actual);
+	//mostrarListaR(pLF->actual);
+	mostrarListaW(pLF->actual);
 
 }
 
@@ -123,6 +148,7 @@ int mostrarListaW(nodoListaDeFichas* nLF) {
 
 		nLF = nLF->siguiente;
 	}
+	//printf("llegue a null");
 	return 0;
 
 }
@@ -139,4 +165,44 @@ int mostrarListaR(nodoListaDeFichas* nLF) {
 	}
 	return 0;
 	
+}
+
+nodoListaDeFichas* insertarNodoFinal(listaDeFichas* pLF) {
+
+	int codigoPersona, edad;
+
+	nodoListaDeFichas* nuevoNodo;
+	nuevoNodo = (nodoListaDeFichas*)malloc(sizeof(nodoListaDeFichas));
+
+	//ingreso datos al nodo / o lo inicializo, podemos poner algo por default tb
+	printf("ingrese codigo persona: ");
+	scanf("%d", &codigoPersona);
+	nuevoNodo->ficha.codPersona = codigoPersona;
+
+	printf("ingrese edad persona: ");
+	scanf("%d", &edad);
+	nuevoNodo->ficha.edad = edad;
+
+	nuevoNodo->siguiente = NULL;
+
+
+
+	if (pLF->cabecera == NULL) {
+		// significa que la lista vino vacia, y que la cabecera sería principio y fin
+		pLF->cabecera = nuevoNodo;
+	}
+	else // (pLF->cabecera != NULL), significa que la lista tiene elementos
+	{
+		// busca el nodo final, del cual el ->siguiente == NULL
+		
+		pLF->actual = pLF->cabecera;
+		
+		while (pLF->actual->siguiente != NULL) {
+			pLF->actual = pLF->actual->siguiente;
+		}
+
+		pLF->actual->siguiente = nuevoNodo;
+		pLF->actual = nuevoNodo;
+	}
+
 }
