@@ -17,21 +17,28 @@ typedef struct nodoListaDeFichas {
 typedef struct listaDeFichas {
 	struct nodoListaDeFichas* cabecera;	//se modifica solo si insertamos al ppio
 	struct nodoListaDeFichas* actual;	//va mutando
-	//int cantElem;	//para facilitar cosas, no es necesario
+	int cantElem;	//para facilitar cosas, no es necesario
 }listaDeFichas;
 
+//funciones de tipo insertar
 nodoListaDeFichas* insertarNodoPpio(listaDeFichas* pLF);
 nodoListaDeFichas* insertarNodoFinal(listaDeFichas* pLF);
 
-nodoListaDeFichas* eliminarNodoPpio(listaDeFichas* pLF);
-nodoListaDeFichas* eliminarNodoFinal(listaDeFichas* pLF);
+//funciones de tipo eliminar
+int eliminarNodoPpio(listaDeFichas* pLF);
+int eliminarNodoFinal(listaDeFichas* pLF);
 
-
+//funciones de tipo inicializar
 listaDeFichas* crearListaDeFichas(void);
 
+//funciones de tipo mostrar
 int mostrarLista(listaDeFichas* pLF);
 int mostrarListaR(nodoListaDeFichas* nLF);
 int mostrarListaW(nodoListaDeFichas* nLF);
+
+
+// Lista TODO de funciones: 
+// 
 //int ordenarLista()
 //int insertarEnPos(posx)
 //int eliminarEnPos(posx)
@@ -58,6 +65,13 @@ int main(void) {
 	insertarNodoPpio(planilla);
 	insertarNodoPpio(planilla);
 	insertarNodoFinal(planilla);
+	printf("\nEstado actual de planilla:\n");
+	mostrarLista(planilla);
+	eliminarNodoFinal(planilla);
+	printf("\nEstado actual de planilla:\n");
+	mostrarLista(planilla);
+	eliminarNodoPpio(planilla);
+	printf("\nEstado actual de planilla:\n");
 	mostrarLista(planilla);
 
 	insertarNodoFinal(planilla2);
@@ -77,6 +91,7 @@ listaDeFichas* crearListaDeFichas(void) {
 	lista = (listaDeFichas*)malloc(sizeof(listaDeFichas));
 	lista->cabecera = NULL;
 	lista->actual = NULL;
+	lista->cantElem = 0;
 	return lista;
 }
 
@@ -126,7 +141,6 @@ int mostrarListaR(nodoListaDeFichas* nLF) {
 nodoListaDeFichas* insertarNodoPpio(listaDeFichas* pLF) {
 
 	int codigoPersona, edad;
-	//nodoListaDeFichas* aux;
 
 	nodoListaDeFichas* nuevoNodo;
 	nuevoNodo = (nodoListaDeFichas*)malloc(sizeof(nodoListaDeFichas));
@@ -142,8 +156,6 @@ nodoListaDeFichas* insertarNodoPpio(listaDeFichas* pLF) {
 	if (pLF->cabecera == NULL) {
 		// significa que la lista vino vacia
 		pLF->cabecera = nuevoNodo;
-
-		//printf("entre en null\n");
 	}
 	else
 		// (pLF->cabecera != NULL) 
@@ -151,9 +163,10 @@ nodoListaDeFichas* insertarNodoPpio(listaDeFichas* pLF) {
 		// significa que la lista tiene elementos
 		nuevoNodo->siguiente = pLF->cabecera;
 		pLF->cabecera = nuevoNodo;
-		//printf("entre en !null\n");
 	}
-
+	
+	pLF->cantElem = pLF->cantElem + 1;
+	return 0;
 }
 
 
@@ -196,7 +209,85 @@ nodoListaDeFichas* insertarNodoFinal(listaDeFichas* pLF) {
 		pLF->actual = nuevoNodo;
 	}
 
+
+	pLF->cantElem = pLF->cantElem + 1;
+	return 0;
 }
 
 
 
+int eliminarNodoFinal(listaDeFichas* pLF) {
+	
+	nodoListaDeFichas* anterior = NULL;		// tambien se podria hacer con menos recursos todavia, con ->siguiente->siguiente
+
+	if (pLF->cabecera == NULL) {
+		// significa que la lista vino vacia, y que la cabecera sería principio y fin
+		printf("lista ya estaba vacia.");
+	}
+	else // necesitamos el actual y el anterior. O sea dos elementos. Por lo tanto, tenemos que ver primero si la lista tiene
+		 // un solo elemento
+	{
+		pLF->actual = pLF->cabecera;
+
+		if (pLF->actual->siguiente == NULL) {
+			// tiene un solo elemento
+			free(pLF->actual);
+			pLF->cabecera = NULL;
+			pLF->actual = pLF->cabecera;
+		}
+		else {
+			while (pLF->actual->siguiente != NULL) {
+				anterior = pLF->actual;
+				pLF->actual = pLF->actual->siguiente;
+			}
+
+			free(pLF->actual);
+			pLF->actual = anterior;
+			pLF->actual->siguiente = NULL;
+
+		}
+		pLF->cantElem = pLF->cantElem - 1;
+	}
+
+
+	
+	return 0;
+}
+
+
+
+
+int eliminarNodoPpio(listaDeFichas* pLF) {
+
+	nodoListaDeFichas* pAuxiliar = NULL;
+
+	if (pLF->cabecera == NULL) {
+		// significa que la lista vino vacia, y que la cabecera sería principio y fin
+		printf("lista ya estaba vacia.");
+	}
+	else // necesitamos el actual y el anterior. O sea dos elementos. Por lo tanto, tenemos que ver primero si la lista tiene
+		 // un solo elemento
+	{
+		pLF->actual = pLF->cabecera;
+
+		if (pLF->actual->siguiente == NULL) {
+			// tiene un solo elemento
+			free(pLF->actual);
+			pLF->cabecera = NULL;
+			pLF->actual = pLF->cabecera;
+		}
+		else {
+			pAuxiliar = pLF->actual->siguiente;
+
+			free(pLF->actual);
+			pLF->actual = pAuxiliar;
+			pLF->cabecera = pAuxiliar;
+
+		}
+		pLF->cantElem = pLF->cantElem - 1;
+	}
+
+
+	
+	return 0;
+}
