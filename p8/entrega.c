@@ -63,10 +63,14 @@ int main(void) {
 	mostrarLista(listaEliminados);
 
 	//elimina todos los nodos y luego la estructura central de lista tambien
+
+	printf("\n\nprocedemos a borrar la lista1:\n\n");
 	borrarLista(lista1);
-	borrarLista(listaEliminados);
 	printf("\n\nprocedemos a mostrar la lista1:\n\n");
-	mostrarLista(lista1);	// debe tener un fallback para lista vacia
+	mostrarLista(lista1);
+
+	printf("\n\nprocedemos a borrar la listaEliminados:\n\n");
+	borrarLista(listaEliminados);
 	printf("\n\nprocedemos a mostrar la listaEliminados:\n\n");
 	mostrarLista(listaEliminados);
 
@@ -322,16 +326,22 @@ int sumaIgualAVeinte(lista* pL, lista* pLEliminados) {
 
 
 int borrarLista(lista* pL) {
-
-	//printf("\nEntre borrarLista\n");
 	int r = 0;
+	if (pL->cabecera == NULL) {
+		printf("profundidad recursion: %d ", r);
+		printf("(lista estaba vacia)\n");
+	}
+	else {
+		//printf("\nEntre borrarLista\n");
+		
 
-	eliminarNodosListaR(pL->cabecera, &r);
+		eliminarNodosListaR(pL->cabecera, &r);
 
-	pL->cabecera = NULL;
-	pL->actual = NULL;
-	printf("r: %d\n", r);
-	pL->cantElem = pL->cantElem - r;
+		pL->cabecera = NULL;
+		pL->actual = NULL;
+		printf("profundidad recursion: %d ", r);
+		pL->cantElem = pL->cantElem - r;
+	}
 
 	return 0;
 
