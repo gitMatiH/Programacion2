@@ -27,7 +27,8 @@ nodoLista* crearNodoLista(int, int, int);
 int insertarNodoFinal(lista* pLF, nodoLista* nuevoNodo);
 
 //funciones de tipo eliminar
-int eliminarLista(lista*);
+int borrarLista(lista*);
+int eliminarNodosListaR(nodoLista* nL, int *r);
 
 //funciones de tipo mostrar
 int mostrarLista(lista* pL);
@@ -62,10 +63,12 @@ int main(void) {
 	mostrarLista(listaEliminados);
 
 	//elimina todos los nodos y luego la estructura central de lista tambien
-	//eliminarLista(lista1);
-	//eliminarLista(ListaEliminados);
-	//mostrarLista(lista1);	// debe tener un fallback para lista vacia
-	//mostrarLista(listaEliminados);
+	borrarLista(lista1);
+	borrarLista(listaEliminados);
+	printf("\n\nprocedemos a mostrar la lista1:\n\n");
+	mostrarLista(lista1);	// debe tener un fallback para lista vacia
+	printf("\n\nprocedemos a mostrar la listaEliminados:\n\n");
+	mostrarLista(listaEliminados);
 
 	return 0;
 }
@@ -115,7 +118,6 @@ int cargarLista(lista* pL) {
 
 		nodoLista* nodoNuevo = crearNodoLista(num, num1, num3);
 		insertarNodoFinal(pL, nodoNuevo);
-		pL->cantElem = pL->cantElem + 1;
 		contNodos = contNodos + 1;
 
 		printf("\nProcedemos a cargar el nodo %d\n", contNodos);
@@ -159,6 +161,10 @@ int mostrarLista(lista* pL) {
 	int i = 1;
 
 	pL->actual = pL->cabecera;
+
+	printf("puntero a cabecera: %p\n", pL->cabecera);
+	printf("puntero a actual: %p\n", pL->actual);
+	printf("cantidad de elementos: %d\n\n", pL->cantElem);
 
 	mostrarListaR(pL->actual, i);
 	//mostrarListaW(pL->actual);
@@ -216,20 +222,22 @@ int sumaMayorAVeinte(lista* pL) {
 		{
 			printf("\nSuma mayor a veinte!\n");
 
-			nodoLista* nuevoNodo = crearNodoLista(pL->actual->datos.num * 2,
-				pL->actual->datos.num1 * 2,
-				pL->actual->datos.num3 * 2);
+			nodoLista* nuevoNodo = crearNodoLista(	pL->actual->datos.num * 2,
+													pL->actual->datos.num1 * 2,
+													pL->actual->datos.num3 * 2);
 
 			if (previo == NULL) { //es porque inserta en primera posicion
 
 				nuevoNodo->siguiente = pL->actual;
 				pL->cabecera = nuevoNodo;
+				pL->cantElem = pL->cantElem + 1;
 
 			}
 			else {
 
 				nuevoNodo->siguiente = pL->actual;
 				previo->siguiente = nuevoNodo;
+				pL->cantElem = pL->cantElem + 1;
 
 			}
 
@@ -309,4 +317,37 @@ int sumaIgualAVeinte(lista* pL, lista* pLEliminados) {
 
 
 	return 0;
+}
+
+
+
+int borrarLista(lista* pL) {
+
+	//printf("\nEntre borrarLista\n");
+	int r = 0;
+
+	eliminarNodosListaR(pL->cabecera, &r);
+
+	pL->cabecera = NULL;
+	pL->actual = NULL;
+	printf("r: %d\n", r);
+	pL->cantElem = pL->cantElem - r;
+
+	return 0;
+
+}
+
+int eliminarNodosListaR(nodoLista* nL, int* r) {
+
+	//printf("\nEntre eliminarNodosListaR\n");
+
+	nodoLista* siguiente = nL->siguiente;
+	free(nL);
+	*r = *r + 1;
+	//printf("\n%p\n", siguiente);
+	if (siguiente != NULL) {
+		eliminarNodosListaR(siguiente, r);
+	}
+	return 0;
+
 }
