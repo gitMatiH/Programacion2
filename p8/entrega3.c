@@ -25,7 +25,7 @@ nodoLista* crearNodoLista(int,int,int);
 
 //funciones de tipo insertar
 //nodoLista* insertarNodoPpio(lista* pL, nodoLista* nodoNuevo);
-nodoLista* insertarNodoFinal(lista* pL, nodoLista* nodoNuevo);
+int insertarNodoFinal(lista* pLF, nodoLista* nuevoNodo);
 //int insertarEnPos(lista* pLF, int posicion, nodoLista* nodoNuevo);
 //int insertarPosAnteriorACondicion(lista* pL, nodoLista* nodoNuevo);
 
@@ -37,9 +37,9 @@ nodoLista* insertarNodoFinal(lista* pL, nodoLista* nodoNuevo);
 //int eliminarActualCondicion(lista* pL);
 
 //funciones de tipo mostrar
-//int mostrarLista(lista* pL);
-//int mostrarListaR(nodoLista* nL);
-//int mostrarListaW(nodoLista* nL);
+int mostrarLista(lista* pL);
+int mostrarListaR(nodoLista* nL, int i);
+int mostrarListaW(nodoLista* nL, int i);
 
 
 int cargarLista(lista* pL);
@@ -54,15 +54,17 @@ int main(void) {
 	lista* listaEliminados = crearLista();
 
 	cargarLista(lista1);
-	//mostrarLista(lista1);
+	printf("\n\nprocedemos a mostrar la lista1:\n\n");
+	mostrarLista(lista1);
 	//solo para mi esto
 	//por suerte las condiciones no se pisan, es decir es lo mismo ejecutar primero uno de los procedimientos que al reves
 	//ojo, esto es solo cierto para mayores a cero (positivos)!!
-	//sumaMayorAVeinte(lista1);
+	sumaMayorAVeinte(lista1);
 	//sumaIgualAVeinte(lista1, listaEliminados);
 	//
 	//mostrarLista(listaEliminados);
-	//mostrarLista(lista1);
+	printf("\n\nprocedemos a mostrar la lista1:\n\n");
+	mostrarLista(lista1);
 
 	//elimina todos los nodos y luego la estructura central de lista tambien
 	//eliminarLista(lista1);
@@ -117,14 +119,133 @@ int cargarLista(lista* pL) {
 	
 
 		nodoLista* nodoNuevo = crearNodoLista(num, num1, num3);
-		//insertarNodoFinal(pL, nodoNuevo);
+		insertarNodoFinal(pL, nodoNuevo);
 		pL->cantElem = pL->cantElem + 1;
 		contNodos = contNodos + 1;
 
 		printf("\nProcedemos a cargar el nodo %d\n", contNodos);
-		printf("Ingrese el elemento \"num\": ");
+		printf("Ingrese el elemento \"num\", 0 para terminar la carga: ");
 		scanf("%d", &num);
 	}
 
 
+}
+
+int insertarNodoFinal(lista* pL, nodoLista* nuevoNodo) {
+
+	int codigoPersona, edad;
+
+
+	if (pL->cabecera == NULL) {
+		// significa que la lista vino vacia, y que la cabecera sería principio y fin
+		pL->cabecera = nuevoNodo;
+	}
+	else // (pLF->cabecera != NULL), significa que la lista tiene elementos
+	{
+		// busca el nodo final, del cual el ->siguiente == NULL
+
+		pL->actual = pL->cabecera;
+
+		while (pL->actual->siguiente != NULL) {
+			pL->actual = pL->actual->siguiente;
+		}
+
+		pL->actual->siguiente = nuevoNodo;
+		pL->actual = nuevoNodo;
+	}
+
+
+	pL->cantElem = pL->cantElem + 1;
+	return 0;
+}
+
+
+int mostrarLista(lista* pL) {
+
+	int i = 1;
+
+	pL->actual = pL->cabecera;
+
+	mostrarListaR(pL->actual, i);
+	//mostrarListaW(pL->actual);
+
+}
+
+int mostrarListaW(nodoLista* nL, int i) {
+
+	while (nL != NULL) {
+		printf("nodo numero: %d\n", i);
+		printf("num: %d\n", nL->datos.num);
+		printf("num1: %d\n", nL->datos.num1);
+		printf("num3: %d\n", nL->datos.num3);
+		//printf("\n%p\n", nL);
+
+		nL = nL->siguiente;
+	}
+	//printf("llegue a null");
+	return 0;
+
+}
+
+int mostrarListaR(nodoLista* nL, int i) {
+
+	if (nL != NULL) {
+
+		printf("nodo numero: %d\n", i);
+		printf("num: %d\n", nL->datos.num);
+		printf("num1: %d\n", nL->datos.num1);
+		printf("num3: %d\n", nL->datos.num3);
+		printf("\n");
+		//printf("\n%p\n", nL);
+
+		mostrarListaR(nL->siguiente, i+1);
+	}
+	return 0;
+
+}
+
+
+int sumaMayorAVeinte(lista* pL) {
+
+
+	nodoLista *previo, *siguiente;
+
+	previo = NULL;
+	pL->actual = pL->cabecera;
+	
+
+	while (pL->actual != NULL) {
+		siguiente = pL->actual->siguiente;
+
+		if ((pL->actual->datos.num +
+			pL->actual->datos.num1 +
+			pL->actual->datos.num3)
+			 > 20)
+		{
+			printf("\nSuma mayor a veinte!\n");
+
+			nodoLista* nuevoNodo = crearNodoLista(pL->actual->datos.num * 2,
+				pL->actual->datos.num1 * 2,
+				pL->actual->datos.num3 * 2);
+
+			if (previo == NULL) { //es porque inserta en primera posicion
+
+				nuevoNodo->siguiente = pL->actual;
+				pL->cabecera = nuevoNodo;
+
+			} else {
+
+				nuevoNodo->siguiente = pL->actual;
+				previo->siguiente = nuevoNodo;
+
+			}
+
+		}
+
+		previo = pL->actual;
+		pL->actual = pL->actual->siguiente;
+	}
+
+
+	return 0;
 }
