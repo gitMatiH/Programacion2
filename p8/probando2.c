@@ -23,11 +23,12 @@ typedef struct listaDeFichas {
 //funciones de tipo insertar
 nodoListaDeFichas* insertarNodoPpio(listaDeFichas* pLF);
 nodoListaDeFichas* insertarNodoFinal(listaDeFichas* pLF);
-int insertarEnPos(listaDeFichas* pLF, int posicion, nodoListaDeFichas* nodoNuevo);
+int insertarEnPosCont(listaDeFichas* pLF, int posicion, nodoListaDeFichas* nodoNuevo);
 
 //funciones de tipo eliminar
 int eliminarNodoPpio(listaDeFichas* pLF);
 int eliminarNodoFinal(listaDeFichas* pLF);
+int eliminarEnPosCont(listaDeFichas* pLF, int posicion);
 
 //funciones de tipo inicializar/crear
 listaDeFichas* crearListaDeFichas(void);
@@ -71,15 +72,22 @@ int main(void) {
 	insertarNodoFinal(planilla);
 	printf("\nEstado actual de planilla:\n");
 	mostrarLista(planilla);
-	eliminarNodoFinal(planilla);
+	//eliminarNodoFinal(planilla);
+	//printf("\nEstado actual de planilla:\n");
+	//mostrarLista(planilla);
+	//eliminarNodoPpio(planilla);
+	//printf("\nEstado actual de planilla:\n");
+	//mostrarLista(planilla);
+	nodoListaDeFichas* nodo = crearNodoListaDeFichas();
+	insertarEnPosCont(planilla, 2, nodo);
 	printf("\nEstado actual de planilla:\n");
 	mostrarLista(planilla);
-	eliminarNodoPpio(planilla);
+	eliminarEnPosCont(planilla, 4);
 	printf("\nEstado actual de planilla:\n");
 	mostrarLista(planilla);
 
-	insertarNodoFinal(planilla2);
-	mostrarLista(planilla2);
+	//insertarNodoFinal(planilla2);
+	//mostrarLista(planilla2);
 
 
 
@@ -299,11 +307,12 @@ int eliminarNodoPpio(listaDeFichas* pLF) {
 
 
 
-int insertarEnPos(listaDeFichas* pLF, int posicion, nodoListaDeFichas* nodoNuevo) {
+int insertarEnPosCont(listaDeFichas* pLF, int posicion, nodoListaDeFichas* nodoNuevo) {
 	
 	int pos;
+	nodoListaDeFichas* sig_actual;
 
-	if (pLF->cantElementos < posicion || posicion < 1) {
+	if ( pLF->cantElem+1 < posicion || posicion < 1) {
 		// validar e imprimir medio que se estaria saliendo de las responsabilidades de insertarEnPos
 		// -> oportunidad de refactoring
 		printf("posicion invalida");
@@ -312,18 +321,92 @@ int insertarEnPos(listaDeFichas* pLF, int posicion, nodoListaDeFichas* nodoNuevo
 	else {	//posicion valida
 		//se posiciona
 		pLF->actual = pLF->cabecera;
+		sig_actual = pLF->actual->siguiente;
 		pos = 1;
-		while ( pos != (posicion-1) ) {//??
-		
-			pLF->actual = pLF->actual->siguiente;
-			pos = pos + 1;
+		if (pos == posicion) {
+			//insertarNodoPpio();	ya tenemos todos los punteros listos, asi que sería una perdida de tiempo volver a llamar a una func
+			nodoNuevo->siguiente = sig_actual;
+			pLF->actual = nodoNuevo;
+			pLF->cabecera = nodoNuevo;
+		}else{
+			while (pos < posicion-1) {	//se posiciona uno antes de la pos a insertar
+				pLF->actual = pLF->actual->siguiente;
+				sig_actual = pLF->actual->siguiente;
+				pos = pos + 1;
+			}
+
+
+			nodoNuevo->siguiente = sig_actual;
+			pLF->actual->siguiente = nodoNuevo;
+			pLF->actual = nodoNuevo;
+
+			/*
+			if (sig_actual != NULL){	//(posicion <= pLF->cantElem)
+				//InsertarEnPos
+				nodoNuevo->siguiente = sig_actual;
+				pLF->actual->siguiente = nodoNuevo;
+				pLF->actual = nodoNuevo;
+			}
+			else {
+				//insertarNodoFinal(); ya tenemos todos los punteros listos, asi que sería una perdida de tiempo volver a llamar a una func
+				nodoNuevo->siguiente = sig_actual;	//que es null
+				pLF->actual->siguiente = nodoNuevo;
+				pLF->actual = nodoNuevo;
+			}
+			*/
+
 		}
 
+		pLF->cantElem = pLF->cantElem + 1;
 	}
-
-
-
 }
+
+
+int eliminarEnPosCont(listaDeFichas* pLF, int posicion) {
+
+	int pos;
+	nodoListaDeFichas* ant_actual;
+
+	if (pLF->cantElem < posicion || posicion < 1) {
+		// validar e imprimir medio que se estaria saliendo de las responsabilidades de insertarEnPos
+		// -> oportunidad de refactoring
+		printf("posicion invalida");
+		return 0;
+	}
+	else {	//posicion valida
+		//se posiciona
+
+		//ant_actual = pLF->cabecera;
+		//pLF->actual = ant_actual->siguiente;
+		ant_actual = NULL;
+		pLF->actual = pLF->cabecera;
+		pos = 1;
+		if (pos == posicion) {
+			//insertarNodoPpio();	ya tenemos todos los punteros listos, asi que sería una perdida de tiempo volver a llamar a una func
+			ant_actual = pLF->actual->siguiente;
+			free(pLF->actual);
+			pLF->cabecera = ant_actual;
+		}
+		else {
+			while (pos != posicion) {	//se posiciona uno antes de la pos a insertar
+				ant_actual = pLF->actual;
+				pLF->actual = pLF->actual->siguiente;
+
+				pos = pos + 1;
+				printf("\nposicion %d\n", pos);
+			}
+			printf("\nant_actual: %p\n", ant_actual);
+			ant_actual->siguiente = pLF->actual->siguiente;
+			printf("\nant_actual: %p\n", ant_actual);
+			printf("\npLF->actual->siguiente: %p\n", pLF->actual->siguiente);
+			free(pLF->actual);
+
+		}
+
+		pLF->cantElem = pLF->cantElem - 1;
+	}
+}
+
 
 nodoListaDeFichas* crearNodoListaDeFichas(void) {
 
