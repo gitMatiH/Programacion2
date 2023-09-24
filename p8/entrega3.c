@@ -60,11 +60,16 @@ int main(void) {
 	//por suerte las condiciones no se pisan, es decir es lo mismo ejecutar primero uno de los procedimientos que al reves
 	//ojo, esto es solo cierto para mayores a cero (positivos)!!
 	sumaMayorAVeinte(lista1);
-	//sumaIgualAVeinte(lista1, listaEliminados);
-	//
-	//mostrarLista(listaEliminados);
 	printf("\n\nprocedemos a mostrar la lista1:\n\n");
 	mostrarLista(lista1);
+	
+	sumaIgualAVeinte(lista1, listaEliminados);
+	printf("\n\nprocedemos a mostrar la lista1:\n\n");
+	mostrarLista(lista1);
+	//
+	mostrarLista(listaEliminados);
+	printf("\n\nprocedemos a mostrar la listaEliminados:\n\n");
+	mostrarLista(listaEliminados);
 
 	//elimina todos los nodos y luego la estructura central de lista tambien
 	//eliminarLista(lista1);
@@ -133,12 +138,11 @@ int cargarLista(lista* pL) {
 
 int insertarNodoFinal(lista* pL, nodoLista* nuevoNodo) {
 
-	int codigoPersona, edad;
-
 
 	if (pL->cabecera == NULL) {
 		// significa que la lista vino vacia, y que la cabecera sería principio y fin
 		pL->cabecera = nuevoNodo;
+		pL->actual = pL->cabecera;
 	}
 	else // (pLF->cabecera != NULL), significa que la lista tiene elementos
 	{
@@ -208,14 +212,15 @@ int mostrarListaR(nodoLista* nL, int i) {
 int sumaMayorAVeinte(lista* pL) {
 
 
-	nodoLista *previo, *siguiente;
+	//nodoLista *previo, *siguiente;
+	nodoLista* previo;
 
 	previo = NULL;
 	pL->actual = pL->cabecera;
 	
 
 	while (pL->actual != NULL) {
-		siguiente = pL->actual->siguiente;
+		//siguiente = pL->actual->siguiente;
 
 		if ((pL->actual->datos.num +
 			pL->actual->datos.num1 +
@@ -244,6 +249,95 @@ int sumaMayorAVeinte(lista* pL) {
 
 		previo = pL->actual;
 		pL->actual = pL->actual->siguiente;
+	}
+
+
+	return 0;
+}
+
+
+
+int sumaIgualAVeinte(lista* pL, lista* pLEliminados) {
+
+	//printf("\nListaEliminados\n");
+	//mostrarLista(pLEliminados);
+	//nodoLista *previo, *siguiente;
+	nodoLista* previo;
+
+	previo = NULL;
+	pL->actual = pL->cabecera;
+
+
+	while (pL->actual != NULL) {
+		//siguiente = pL->actual->siguiente;
+
+		if ((pL->actual->datos.num +
+			pL->actual->datos.num1 +
+			pL->actual->datos.num3)
+			 == 20)
+		{
+			printf("\nSuma igual a veinte!\n");
+
+
+			if (previo == NULL) { //es porque elimina en primera posicion
+
+				pL->cabecera = pL->actual->siguiente;
+
+				pL->actual->siguiente = NULL;
+
+				printf("num: %d\n", pL->actual->datos.num);
+				printf("num1: %d\n", pL->actual->datos.num1);
+				printf("num3: %d\n", pL->actual->datos.num3);
+				printf("siguiente: %p\n", pL->actual->siguiente);
+				printf("\n");
+				
+				nodoLista* nuevoNodo = crearNodoLista(	pL->actual->datos.num,
+														pL->actual->datos.num1,
+														pL->actual->datos.num3);
+				insertarNodoFinal(pLEliminados, nuevoNodo);
+
+				free(pL->actual);
+
+				printf("\nListaEliminados\n");
+				mostrarLista(pLEliminados);
+
+				pL->actual = pL->cabecera;
+				pL->cantElem = pL->cantElem - 1;
+				//printf("\nListaEliminados\n");
+				//mostrarLista(pLEliminados);
+
+			}
+			else {
+
+				previo->siguiente = pL->actual->siguiente;
+
+
+				printf("num: %d\n", pL->actual->datos.num);
+				printf("num1: %d\n", pL->actual->datos.num1);
+				printf("num3: %d\n", pL->actual->datos.num3);
+				printf("siguiente: %p\n", pL->actual->siguiente);
+				printf("\n");
+
+				nodoLista* nuevoNodo = crearNodoLista(	pL->actual->datos.num,
+														pL->actual->datos.num1,
+														pL->actual->datos.num3);
+
+
+				insertarNodoFinal(pLEliminados, nuevoNodo);
+				free(pL->actual);
+
+				pL->actual = previo->siguiente;
+
+				pL->cantElem = pL->cantElem - 1;
+				printf("\nListaEliminados\n");
+				mostrarLista(pLEliminados);
+
+			}
+
+		} else {
+			previo = pL->actual;
+			pL->actual = pL->actual->siguiente;
+		}
 	}
 
 
