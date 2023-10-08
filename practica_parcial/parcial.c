@@ -67,10 +67,10 @@ int main()
 
     printf("\n1: cargarLista");
     printf("\n2: generar");
-    printf("\n3: promedioSeguridad");
+    printf("\n3: promedio de estudiantes Seguridad");
     printf("\n4: eliminar por legajo");
     printf("\n5: insertar");
-    printf("\n6: mostrarLista");
+    printf("\n6: mostrar lista");
     printf("\nelija opcion, 0 para salir:\n");
 
     scanf("%d", &opcion);
@@ -101,7 +101,7 @@ int main()
             printf("\nSe inserta delante de alumno por condicion.\n");
             printf("\ningrese el legajo para la condicion: ");
             scanf("%d", &legajo);
-            listaEstudiantes = insertar1(listaEstudiantes, legajo);
+            //listaEstudiantes = insertar1(listaEstudiantes, legajo);
             insertar2(listaEstudiantes, legajo);
         }
         if (opcion == 6) {
@@ -112,10 +112,10 @@ int main()
 
         printf("\n1: cargarLista");
         printf("\n2: generar");
-        printf("\n3: promedioSeguridad");
+        printf("\n3: promedio de estudiantes Seguridad");
         printf("\n4: eliminar por legajo");
         printf("\n5: insertar");
-        printf("\n6: mostrarLista");
+        printf("\n6: mostrar lista");
         printf("\nelija opcion, 0 para salir:\n");
         scanf("%d", &opcion);
     }
@@ -147,7 +147,7 @@ void cargarLista(nodo* listaEstudiantes) {
         printf("\nIngrese la carrera Sistemas/Inteligencia:\n");
         fflush(stdin);
         scanf("%s", &(listaEstudiantes->carrera));  // hacerle un print while != /0 a ver q pasa
-        while ( !(strcmp(listaEstudiantes->carrera, "Sistemas") == 0
+        while ( !(strcmp(listaEstudiantes->carrera, "Seguridad") == 0
                 || strcmp(listaEstudiantes->carrera, "Inteligencia") == 0) )
         {
             printf("Ingreso invalido\n");
@@ -229,7 +229,7 @@ float promedioSeguridad(nodo* listaEstudiantes) {
     int estudiantes = 0;
     while (listaEstudiantes->sig != NULL) { //claro esto fallo porque toma el que esta de mas
         //if (!strcmp(listaEstudiantes->carrera, "Sistemas")) {
-        if ( strcmp(listaEstudiantes->carrera, "Sistemas") == 0 ) {
+        if ( strcmp(listaEstudiantes->carrera, "Seguridad") == 0 ) {
             estudiantes = estudiantes + 1;
         }
         contador = contador + 1;
