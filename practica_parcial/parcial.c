@@ -144,14 +144,14 @@ void cargarLista(nodo* listaEstudiantes) {
             scanf("%d", &(listaEstudiantes->edad));
         }
 
-        printf("\nIngrese la carrera Sistemas/Inteligencia:\n");
+        printf("\nIngrese la carrera Seguridad/Inteligencia:\n");
         fflush(stdin);
         scanf("%s", &(listaEstudiantes->carrera));  // hacerle un print while != /0 a ver q pasa
         while ( !(strcmp(listaEstudiantes->carrera, "Seguridad") == 0
                 || strcmp(listaEstudiantes->carrera, "Inteligencia") == 0) )
         {
             printf("Ingreso invalido\n");
-            printf("\nIngrese la carrera Sistemas/Inteligencia:\n");
+            printf("\nIngrese la carrera Seguridad/Inteligencia:\n");
             fflush(stdin);
             scanf("%s", &(listaEstudiantes->carrera));
         }
@@ -228,7 +228,7 @@ float promedioSeguridad(nodo* listaEstudiantes) {
     int contador = 0;
     int estudiantes = 0;
     while (listaEstudiantes->sig != NULL) { //claro esto fallo porque toma el que esta de mas
-        //if (!strcmp(listaEstudiantes->carrera, "Sistemas")) {
+        //if (!strcmp(listaEstudiantes->carrera, "Seguridad")) {
         if ( strcmp(listaEstudiantes->carrera, "Seguridad") == 0 ) {
             estudiantes = estudiantes + 1;
         }
