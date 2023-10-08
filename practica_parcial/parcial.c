@@ -101,7 +101,7 @@ int main()
             printf("\nSe inserta delante de alumno por condicion.\n");
             printf("\ningrese el legajo para la condicion: ");
             scanf("%d", &legajo);
-            //listaEstudiantes = insertar1(listaEstudiantes, legajo);
+            //listaEstudiantes = insertar1(listaEstudiantes, legajo);   //esto no pide
             insertar2(listaEstudiantes, legajo);
         }
         if (opcion == 6) {
