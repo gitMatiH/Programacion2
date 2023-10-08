@@ -1,4 +1,5 @@
 /*
+
 En la universidad hay dos nuevas carreras:
 Inteligencia artificial
 Ciberseguridad
@@ -57,17 +58,19 @@ int main()
     nodo* listaIA2do;
     float promedio;
     int legajo;
+    int opcion;
 
     listaEstudiantes = (nodo*)malloc(sizeof(nodo));
     listaIA2do = (nodo*)malloc(sizeof(nodo));
 
-    int opcion;
     printf("\n1: cargarLista");
     printf("\n2: generar");
     printf("\n3: promedioSeguridad");
-    printf("\n4: opc4");
+    printf("\n4: eliminar por legajo");
     printf("\n5: opc5");
+    printf("\n6: mostrarLista");
     printf("\nelija opcion, 0 para salir:\n");
+
     scanf("%d", &opcion);
     while (opcion != 0) {
         if (opcion == 1) {
@@ -83,24 +86,30 @@ int main()
         if (opcion == 3) {
             printf("\nSe calcula el promedio estudiantes que eligen Seguridad sobre el total.\n");
             promedio = promedioSeguridad(listaEstudiantes);
-            printf("\nEl promedio de estudiantes que eligen seguridad es: %f", promedio);
+            printf("\nEl promedio de estudiantes que eligen seguridad es: %.2f\n", promedio);
         }
         if (opcion == 4) {
             printf("\nSe eliminan estudiantes de la lista.\n");
-            scanf("\ningrese el legajo a buscar: %d", &legajo);
+            printf("\ningrese el legajo a buscar: ");
+            scanf("%d", &legajo);
                 listaEstudiantes = eliminar1(listaEstudiantes, legajo);
             eliminar2(listaEstudiantes, legajo);
         }
         if (opcion == 5) {
             printf("\nSe inserta delante de alumno por condicion.\n");
         }
+        if (opcion == 6) {
+            printf("\nSe muestra la lista total:\n");
+            mostrar(listaEstudiantes);
+        }
 
 
         printf("\n1: cargarLista");
         printf("\n2: generar");
         printf("\n3: promedioSeguridad");
-        printf("\n4: opc4");
+        printf("\n4: eliminar por legajo");
         printf("\n5: opc5");
+        printf("\n6: mostrarLista");
         printf("\nelija opcion, 0 para salir:\n");
         scanf("%d", &opcion);
     }
@@ -112,6 +121,7 @@ void cargarLista(nodo* listaEstudiantes) {
 
     printf("\nIngrese el numero de legajo, 0 para terminar:\n");
     scanf("%d", &(listaEstudiantes->legajo));
+
     if (listaEstudiantes->legajo != 0) {
 
         printf("\nIngrese el nombre del alumno:\n");
@@ -148,8 +158,6 @@ void cargarLista(nodo* listaEstudiantes) {
             scanf("%d", &(listaEstudiantes->anio));
         }
 
-
-
         nodo* nuevoNodo = (nodo*)malloc(sizeof(nodo));
         listaEstudiantes->sig = nuevoNodo;
         cargarLista(listaEstudiantes->sig);
@@ -160,6 +168,7 @@ void cargarLista(nodo* listaEstudiantes) {
     return;
 }
 
+//precond: lista valida (terminada en NULL)
 void mostrar(nodo* listaEstudiantes) {
 
     if (listaEstudiantes->sig != NULL) {
@@ -212,9 +221,9 @@ float promedioSeguridad(nodo* listaEstudiantes) {
     float promedio = 0;
     int contador = 0;
     int estudiantes = 0;
-    while (listaEstudiantes != NULL) {
-        if (!strcmp(listaEstudiantes->carrera, "Sistemas")) {
-
+    while (listaEstudiantes->sig != NULL) { //claro esto fallo porque toma el que esta de mas
+        //if (!strcmp(listaEstudiantes->carrera, "Sistemas")) {
+        if ( strcmp(listaEstudiantes->carrera, "Sistemas") == 0 ) {
             estudiantes = estudiantes + 1;
         }
         contador = contador + 1;
@@ -244,11 +253,10 @@ nodo* eliminar1(nodo* listaEstudiantes, int legajo) {
 
 void eliminar2(nodo* listaEstudiantes, int legajo) {
     //elimina en resto de lista
-
     while (listaEstudiantes->sig != NULL && listaEstudiantes->sig->sig != NULL) {
         if (listaEstudiantes->legajo == legajo) {
-            //tendria que eliminar el que esta entre los que estan referenciados
-            //y luego reconectar el puntero "siguiente" del anterior con el que le seguia al eliminado
+            listaEstudiantes->sig = listaEstudiantes->sig->sig;
+            free(listaEstudiantes);
         }
 
         listaEstudiantes = listaEstudiantes->sig;
