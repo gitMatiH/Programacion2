@@ -51,6 +51,8 @@ void generar(nodo*, nodo*);
 float promedioSeguridad(nodo* listaEstudiantes);
 nodo* eliminar1(nodo* listaEstudiantes, int legajo);
 void eliminar2(nodo* listaEstudiantes, int legajo);
+nodo* insertar1(nodo* listaEstudiantes, int legajo);
+void insertar2(nodo* listaEstudiantes, int legajo);
 
 int main()
 {
@@ -67,7 +69,7 @@ int main()
     printf("\n2: generar");
     printf("\n3: promedioSeguridad");
     printf("\n4: eliminar por legajo");
-    printf("\n5: opc5");
+    printf("\n5: insertar");
     printf("\n6: mostrarLista");
     printf("\nelija opcion, 0 para salir:\n");
 
@@ -92,11 +94,15 @@ int main()
             printf("\nSe eliminan estudiantes de la lista.\n");
             printf("\ningrese el legajo a buscar: ");
             scanf("%d", &legajo);
-                listaEstudiantes = eliminar1(listaEstudiantes, legajo);
+            listaEstudiantes = eliminar1(listaEstudiantes, legajo);
             eliminar2(listaEstudiantes, legajo);
         }
         if (opcion == 5) {
             printf("\nSe inserta delante de alumno por condicion.\n");
+            printf("\ningrese el legajo para la condicion: ");
+            scanf("%d", &legajo);
+            listaEstudiantes = insertar1(listaEstudiantes, legajo);
+            insertar2(listaEstudiantes, legajo);
         }
         if (opcion == 6) {
             printf("\nSe muestra la lista total:\n");
@@ -108,7 +114,7 @@ int main()
         printf("\n2: generar");
         printf("\n3: promedioSeguridad");
         printf("\n4: eliminar por legajo");
-        printf("\n5: opc5");
+        printf("\n5: insertar");
         printf("\n6: mostrarLista");
         printf("\nelija opcion, 0 para salir:\n");
         scanf("%d", &opcion);
@@ -262,4 +268,48 @@ void eliminar2(nodo* listaEstudiantes, int legajo) {
         listaEstudiantes = listaEstudiantes->sig;
     }
 
+}
+
+
+nodo* insertar1(nodo* listaEstudiantes, int legajo) {
+    //inserta al ppio el nodo deseado, si es que el legajo coincide
+    if (listaEstudiantes->legajo == legajo) {
+        nodo* nuevoNodo = (nodo*)malloc(sizeof(nodo));
+        nuevoNodo->legajo = 9999;
+        strcpy(nuevoNodo->nombre, "PEPE");
+        nuevoNodo->edad = 99;
+        strcpy(nuevoNodo->carrera, "Inteligencia");
+        nuevoNodo->anio = 0;
+
+        nuevoNodo->sig = listaEstudiantes;
+        listaEstudiantes = nuevoNodo;
+
+        return listaEstudiantes;
+    }else{
+        return listaEstudiantes;
+    }
+
+}
+
+
+void insertar2(nodo* listaEstudiantes, int legajo) {
+    // se asume legajo es unico
+    // inserta en cualquier lado en medio de la lista
+    nodo* nuevoNodo = NULL;
+    while (listaEstudiantes->sig != NULL) {
+        if (listaEstudiantes->legajo == legajo) {
+
+            nuevoNodo = (nodo*)malloc(sizeof(nodo));
+            nuevoNodo->legajo = 9999;
+            strcpy(nuevoNodo->nombre, "PEPE");
+            nuevoNodo->edad = 99;
+            strcpy(nuevoNodo->carrera, "Inteligencia");
+            nuevoNodo->anio = 0;
+
+            nuevoNodo->sig = listaEstudiantes->sig;
+            listaEstudiantes->sig = nuevoNodo;
+        }
+
+        listaEstudiantes = listaEstudiantes->sig;
+    }
 }
