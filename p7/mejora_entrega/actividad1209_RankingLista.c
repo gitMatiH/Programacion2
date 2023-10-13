@@ -33,7 +33,7 @@ IMPORTANTE: El programa debe contar con un menú que permita seleccionar que se d
 
 int main(void) {
 
-	int opcion = -1;
+	int opcion;
 	int contadorClientes = 0;
 	int nroCliente = 1;
 	nodoRanking* masVendido = NULL;
@@ -46,18 +46,17 @@ int main(void) {
 	cargarProductos(lP);	//una idea seria hacerlo por archivo csv, pero va copiando y pegando un txt
 	inicializarRanking(lR);		//no hace falta inicializar el ranking con listas, lo vas llenando directo
 
+	printf("\n\nMenu");
+	printf("\n1. Atender clientes");
+	printf("\n2. Mostrar productos disponibles");
+	printf("\n3. Mostrar producto mas vendido");
+	printf("\n0. Salir");
+	printf("\n\nIngrese opcion: ");
+	scanf("%d", &opcion);
+	system("cls");
+
 	//loop principal
 	while (opcion != 0) {
-
-		printf("\n\nMenu");
-		printf("\n1. Atender clientes");
-		printf("\n2. Mostrar productos disponibles");
-		printf("\n3. Mostrar producto mas vendido");
-		printf("\n0. Salir");
-		printf("\n\nIngrese opcion: ");
-		scanf("%d", &opcion);
-		
-		system("cls");
 
 		switch (opcion) {
 
@@ -65,12 +64,9 @@ int main(void) {
 			break;
 
 		case 1:
-			if (contadorClientes < 10) {
-				lT = atenderCliente(&contadorClientes, lP, lT, lR);
-			}
-			else if (contadorClientes >= 10) {
-				printf("\nmaximo de clientes diarios alcanzado.\n");
-			}
+
+			atenderCliente(&contadorClientes, lP, lT, lR);
+
 			break;
 
 		case 2:
@@ -88,7 +84,18 @@ int main(void) {
 			printf("Codigo invalido.");
 			break;
 		}
+
+		printf("\n\nMenu");
+		printf("\n1. Atender clientes");
+		printf("\n2. Mostrar productos disponibles");
+		printf("\n3. Mostrar producto mas vendido");
+		printf("\n0. Salir");
+		printf("\n\nIngrese opcion: ");
+		scanf("%d", &opcion);
+		system("cls");
 	}
+
+
 	return 0;
 }
 

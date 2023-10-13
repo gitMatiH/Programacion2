@@ -40,7 +40,7 @@ void cargarProductos(nodoProductos* lP);
 
 void inicializarRanking(nodoRanking* lR);
 
-nodoTicket* atenderCliente(int* contadorClientes, 
+void atenderCliente(int* contadorClientes, 
 							nodoProductos* lP, 
 							nodoTicket* lT, 
 							nodoRanking* lR);

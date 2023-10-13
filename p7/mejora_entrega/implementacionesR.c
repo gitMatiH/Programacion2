@@ -4,17 +4,15 @@ este comando me compilo todo
 */
 
 #include "actividad1209_RankingLista.h"
-
-
-// declaraciones funciones utilitarias
+//#include "implementacionesR.h"
 
 void mostrarTicket(nodoTicket* lT);
 
 nodoTicket* borrarTicket(nodoTicket* lT);
 
 void generarTicket(nodoProductos* lP,
-							nodoTicket* lT,
-							nodoRanking* lR);
+	nodoTicket* lT,
+	nodoRanking* lR);
 
 nodoProductos* buscar(nodoProductos* lP, int id, nodoProductos* pElemL);
 
@@ -109,40 +107,43 @@ void cargarProductos(nodoProductos* lP) {
 }
 
 
-nodoTicket* atenderCliente(int* contadorClientes,
-							nodoProductos* lP,
-							nodoTicket* lT,
-							nodoRanking* lR)
+void atenderCliente(int* contadorClientes,
+					nodoProductos* lP,
+					nodoTicket* lT,
+					nodoRanking* lR)
 {
 	float monto = 0.0;
 	int nro_cliente; // podria estar vinculado a una BBDD
-
-	*contadorClientes = *contadorClientes + 1;
-	if (*contadorClientes <= 10) {
+	if (*contadorClientes < 10) {
 		printf("\n\nIngrese el numero de cliente: ");
 		scanf("%d", &nro_cliente);
+
+		if (nro_cliente != 0) {
+
+			*contadorClientes = *contadorClientes + 1;
+
+			printf("\nAgregando al ticket:\n");
+			lT->sig = NULL;
+			generarTicket(lP, lT, lR);
+			printf("\n*********************************************\n");
+			printf("\nNro. cliente: %d\n\nTicket:\n", nro_cliente);
+			mostrarTicket(lT);
+			monto = calcularTotal(lT, &monto);
+			printf("\nMonto total: %.2f\n", monto);
+			printf("\nFin ticket\n");
+			printf("\n*********************************************\n");
+			//almacenar ticket en BBDD
+			//aplicar descuentos y beneficios al nro de cliente (fidelizacion)
+			lT = borrarTicket(lT); // hacer el borrado mas eficiente
+			mostrarTicket(lT); //ticket vacio
+
+			atenderCliente(contadorClientes, lP, lT, lR);
+		}
+
+	}else{ 
+		printf("\nmaximo de clientes diarios alcanzado.\n"); 
 	}
-	else{
-		printf("\nmaximo de clientes diarios alcanzado.\n");
-	}
-	if (nro_cliente != 0 && *contadorClientes <= 10) {
-		printf("\nAgregando al ticket:\n");
-		lT->sig = NULL;
-		generarTicket(lP,lT,lR);
-		printf("\n*********************************************\n");
-		printf("\nNro. cliente: %d\n\nTicket:\n", nro_cliente);
-		mostrarTicket(lT);
-		monto = calcularTotal(lT, &monto);
-		printf("\nMonto total: %.2f\n", monto);
-		printf("\nFin ticket\n");
-		printf("\n*********************************************\n");
-		//almacenar ticket en BBDD
-		//aplicar descuentos y beneficios al nro de cliente (fidelizacion)
-		lT = borrarTicket(lT); // hacer el borrado mas eficiente
-		mostrarTicket(lT); //ticket vacio
-		atenderCliente(contadorClientes, lP, lT, lR);
-	}
-	
+	return;
 }
 
 void mostrarTicket(nodoTicket* lT) {
