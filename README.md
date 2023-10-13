@@ -18,6 +18,8 @@ https://www.youtube.com/watch?v=Y4OABXkRSEA</br>
 How to parse a string in C (sscanf)</br>
 https://www.youtube.com/watch?v=-7cSmcdMryo</br>
 
+System Programming Tools</br>
+https://calvinkam.github.io/csci3150-Fall17-lab3/</br>
 
 C++ Libraries For Beginners</br>
 https://www.youtube.com/watch?v=a5kUr-u2UNo</br>
@@ -30,7 +32,20 @@ https://www.youtube.com/watch?v=xBfwQv8mxCI</br>
 Making and Working with Libraries in C++ (Multiple Projects in Visual Studio)</br>
 https://www.youtube.com/watch?v=Wt4dxDNmDA8</br>
 
+Makefile</br>
+Makefile Tutorial by Example</br>
+https://makefiletutorial.com/</br>
+A Simple Makefile Tutorial</br>
+https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/</br>
+A Simple Makefile</br>
+https://www.gnu.org/software/make/manual/html_node/Simple-Makefile.html</br>
 
+Blog | opensource.com</br>
+https://opensource.com/article/19/5/how-write-good-c-main-function</br>
+https://opensource.com/article/19/7/structure-multi-file-c-part-1</br>
+https://opensource.com/article/19/7/structure-multi-file-c-part-2</br>
+https://opensource.com/article/18/3/what-open-source-programming</br>
+https://opensource.com/article/22/8/writing-project-documentation-html</br>
 
 Learn PostgreSQL Tutorial - Full Course for Beginners</br>
 https://www.youtube.com/watch?v=qw--VYLpxG4</br>
