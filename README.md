@@ -30,7 +30,11 @@ https://www.youtube.com/watch?v=xBfwQv8mxCI</br>
 Making and Working with Libraries in C++ (Multiple Projects in Visual Studio)</br>
 https://www.youtube.com/watch?v=Wt4dxDNmDA8</br>
 
-
+Makefile</br>
+A Simple Makefile Tutorial</br>
+https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/</br>
+A Simple Makefile</br>
+https://www.gnu.org/software/make/manual/html_node/Simple-Makefile.html</br>
 
 Learn PostgreSQL Tutorial - Full Course for Beginners</br>
 https://www.youtube.com/watch?v=qw--VYLpxG4</br>
