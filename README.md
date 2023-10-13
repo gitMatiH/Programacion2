@@ -36,12 +36,12 @@ https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/</br>
 A Simple Makefile</br>
 https://www.gnu.org/software/make/manual/html_node/Simple-Makefile.html</br>
 
-Blog | opensource.com
-https://opensource.com/article/19/5/how-write-good-c-main-function
-https://opensource.com/article/19/7/structure-multi-file-c-part-1
-https://opensource.com/article/19/7/structure-multi-file-c-part-2
-https://opensource.com/article/18/3/what-open-source-programming
-https://opensource.com/article/22/8/writing-project-documentation-html
+Blog | opensource.com</br>
+https://opensource.com/article/19/5/how-write-good-c-main-function</br>
+https://opensource.com/article/19/7/structure-multi-file-c-part-1</br>
+https://opensource.com/article/19/7/structure-multi-file-c-part-2</br>
+https://opensource.com/article/18/3/what-open-source-programming</br>
+https://opensource.com/article/22/8/writing-project-documentation-html</br>
 
 Learn PostgreSQL Tutorial - Full Course for Beginners</br>
 https://www.youtube.com/watch?v=qw--VYLpxG4</br>
