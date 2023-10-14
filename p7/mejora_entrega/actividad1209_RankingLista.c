@@ -44,7 +44,7 @@ int main(void) {
 
 	printf("\nCargue los productos:\n");
 	cargarProductos(lP);	//una idea seria hacerlo por archivo csv, pero va copiando y pegando un txt
-	inicializarRanking(lR);		//no hace falta inicializar el ranking con listas, lo vas llenando directo
+	inicializarRanking(lR, lP);		//no hace falta inicializar el ranking con listas, lo vas llenando directo
 
 	printf("\n\nMenu");
 	printf("\n1. Atender clientes");
@@ -77,7 +77,18 @@ int main(void) {
 
 		case 3:
 			//ordenarLista(lR);
-			masVendido = buscarMasVendido(lR);
+			nodoRanking * masVendido = (nodoRanking*)malloc(sizeof(nodoRanking));
+			masVendido = NULL;
+			masVendido = buscarMasVendido(lR, masVendido);
+			if (masVendido == NULL) {
+				printf("\nNo hubo ventas.\n");
+			}
+			else {
+				printf("\nMas Vendido: \n");
+				printf("\nid:\t%d", masVendido->id);
+				printf("\nombre:\t%s", masVendido->nombre);
+				printf("\nventas:\t%d", masVendido->ventas);
+			}
 			break;
 
 		default:

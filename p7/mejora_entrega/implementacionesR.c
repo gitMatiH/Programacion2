@@ -18,7 +18,7 @@ nodoProductos* buscar(nodoProductos* lP, int id, nodoProductos* pElemL);
 
 void agregar(nodoTicket* lT, int id, int cant, nodoProductos* pElemL);
 
-void descontar(nodoProductos* lP, int id, int cant);
+void descontar(nodoProductos* pElemL, int cant);
 
 void actualizarRanking(nodoRanking* lR, int id, int cant);
 
@@ -129,13 +129,13 @@ void atenderCliente(int* contadorClientes,
 			printf("\nNro. cliente: %d\n\nTicket:\n", nro_cliente);
 			mostrarTicket(lT);
 			monto = calcularTotal(lT, &monto);
+			//aplicar descuentos y beneficios al nro de cliente (fidelizacion)
 			printf("\nMonto total: %.2f\n", monto);
 			printf("\nFin ticket\n");
 			printf("\n*********************************************\n");
 			//almacenar ticket en BBDD
-			//aplicar descuentos y beneficios al nro de cliente (fidelizacion)
 			lT = borrarTicket(lT); // hacer el borrado mas eficiente
-			mostrarTicket(lT); //ticket vacio
+			mostrarTicket(lT); //ticket vacio, opcional
 
 			atenderCliente(contadorClientes, lP, lT, lR);
 		}
@@ -210,7 +210,7 @@ void generarTicket(nodoProductos* lP,
 			}
 			
 			agregar(lT, id, cant, pElemL);
-			descontar(lP, id, cant);
+			descontar(pElemL, cant);
 			actualizarRanking(lR, id, cant);
 			generarTicket(lP, lT, lR);
 		}
@@ -265,12 +265,28 @@ void agregar(nodoTicket* lT, int id, int cant, nodoProductos* pElemL) {
 
 
 
-void descontar(nodoProductos* lP, int id, int cant) {
-
+void descontar(nodoProductos* pElemL, int cant) {
+	// pElemL ya es un puntero al lugar de la lista que queremos
+	if ( (pElemL->cantidad - cant) >=0 ) {
+		pElemL->cantidad = pElemL->cantidad - cant;
+	}
+	else {
+		printf("\nError.\n");
+		pElemL->cantidad = 0;
+	}
+	return;
 }
 
 void actualizarRanking(nodoRanking* lR, int id, int cant) {
-
+	// aqui si hay que buscar el nodo
+	if (lR->sig != NULL){
+		if (lR->id == id){
+			lR->ventas = lR->ventas + cant;
+			return;
+		}
+		actualizarRanking(lR->sig, id, cant);
+		return;	
+	}
 }
 
 
@@ -292,17 +308,42 @@ void mostrarDisponibles(nodoProductos* lP) {
 
 
 
-nodoRanking* buscarMasVendido(nodoRanking* lR) {
-	nodoRanking* masVendido = (nodoRanking*)malloc(sizeof(nodoRanking));
+nodoRanking* buscarMasVendido(nodoRanking* lR, nodoRanking* masVendido) {
+	
+	if (lR->sig != NULL) {
+		if (masVendido == NULL) {
+			masVendido = lR;
+		}else{
+			if (lR->ventas > masVendido->ventas) {
+				masVendido = lR;
+			}
+		}
+		buscarMasVendido(lR->sig, masVendido);
+	}
 	return masVendido;
 }
 
 
 void ordenarLista(nodoRanking* lR) {
+	// podemos ordenar los datos de la lista,
+	// o bien intercambiar directamente los nodos.
 	return;
 }
 
-void inicializarRanking(nodoRanking* lR) {
+void inicializarRanking(nodoRanking* lR, nodoProductos* lP) {
+	
+	lR->sig = NULL;
 
+	
+	if (lP->sig != NULL) {	// si los hicieramos en conjunto en vez de secuencial, romperia la recursion
+		
+		lR->id = lP->id;
+		strcpy(lR->nombre, lP->nombre);
+		lR->ventas = 0;
+
+		nodoRanking* nuevoNodo = (nodoRanking*)malloc(sizeof(nodoRanking));
+		lR->sig = nuevoNodo;
+		inicializarRanking(lR->sig, lP->sig);
+	}
 	return;
 }

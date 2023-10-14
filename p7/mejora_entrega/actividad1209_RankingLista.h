@@ -38,7 +38,7 @@ typedef struct rankingProducto {
 // a la lista que esta en el programa ppal
 void cargarProductos(nodoProductos* lP);
 
-void inicializarRanking(nodoRanking* lR);
+void inicializarRanking(nodoRanking* lR, nodoProductos* lP);
 
 void atenderCliente(int* contadorClientes, 
 							nodoProductos* lP, 
@@ -47,7 +47,7 @@ void atenderCliente(int* contadorClientes,
 
 void mostrarDisponibles(nodoProductos* lP);
 
-nodoRanking* buscarMasVendido(nodoRanking* lR);
+nodoRanking* buscarMasVendido(nodoRanking* lR, nodoRanking* masVendido);
 
 //void ordenarLista(nodoRanking* lR);
 
