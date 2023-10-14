@@ -39,6 +39,7 @@ A Simple Makefile Tutorial</br>
 https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/</br>
 A Simple Makefile</br>
 https://www.gnu.org/software/make/manual/html_node/Simple-Makefile.html</br>
+https://www.math.colostate.edu/~yzhou/computer/writemakefile.html</br>
 
 Blog | opensource.com</br>
 https://opensource.com/article/19/5/how-write-good-c-main-function</br>
