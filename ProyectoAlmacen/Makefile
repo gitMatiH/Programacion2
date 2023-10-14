@@ -1,0 +1,2 @@
+all:
+	gcc -o almacen src/almacen.c src/AtenderCliente/atenderCliente.c src/AtenderCliente/mostrar.c src/BuscarMasVendido/BuscarmasVendido.c src/CargarProductos/cargarProductos.c src/InicializarRanking/inicializarRanking.c
