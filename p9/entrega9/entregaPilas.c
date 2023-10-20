@@ -36,12 +36,22 @@ void generarPila(nodo **);
 void mostrarPilaDestr(nodo **);
 void mostrarPila(nodo **);
 
-
+int multiplosTres(nodo** );
+float promedioDivCuatro(nodo**);
+int sumatoriaMultiplosPrimero(nodo**);
+void posMax(nodo**, int*, int*);
+void posMin(nodo**, int*, int*);
+void apariciones(nodo**, int, int*);
 
 int main()
 {
     int opcion;
-    
+    int cant;
+    float promedio;
+    int sumatoria;
+    int pos, max, min;
+    int numero, contador;
+
     nodo *p= NULL;  //"p" es nuestro
                     //handle, nustra 
                     //manija a la pila
@@ -52,7 +62,7 @@ int main()
     printf("\n3. Mostrar pila.");
     printf("\n4. Multiplos de 3.");
     printf("\n5. Promedio divisores 4.");
-    printf("\n6. Sumatoria de elementos promedio del primer elemento.");
+    printf("\n6. Sumatoria de elementos multiplos del primer elemento.");
     printf("\n7. Numero maximo y posicion.");
     printf("\n8. Numero minimo y su posicion.");
     printf("\n9. Cantidad de veces de un numero en pila.");
@@ -76,19 +86,63 @@ int main()
             mostrarPila(&p);
             break;
         case 4:
-            /* code */
+            if (p == NULL) {
+                printf("\nPoblar primero la pila:\n");
+                generarPila(&p);
+            }
+            cant = multiplosTres(&p);
+            printf("\nla cantidad de multiplos de tres en la pila es de: %d\n", cant);
             break;
         case 5:
-            /* code */
+            if (p == NULL) {
+                printf("\nPoblar primero la pila:\n");
+                generarPila(&p);
+            }
+            promedio = promedioDivCuatro(&p);
+            printf("\nEl promedio de los divisores de cuatro es de: %.2f\n", promedio);
             break;
         case 6:
-            /* code */
+            if (p == NULL) {
+                printf("\nPoblar primero la pila:\n");
+                generarPila(&p);
+            }
+            sumatoria = sumatoriaMultiplosPrimero(&p);
+            printf("\nLa sumatoria de los multiplos del primer elemento de la lista es: %d\n", sumatoria);
             break;
         case 7:
-            /* code */
+            if (p == NULL) {
+                printf("\nPila Vacia.\n");
+            }
+            else {
+                posMax(&p, &pos, &max);
+                printf("\nEl numero maximo de la pila es: %d\ny su posicion es: %d\n", max, pos);
+            }
             break;
         case 8:
-            /* code */
+            if (p == NULL) {
+                printf("\nPila Vacia.\n");
+            }
+            else {
+                posMin(&p, &pos, &min);
+                printf("\nEl numero minimo de la pila es: %d\ny su posicion es: %d\n", min, pos);
+            }
+            break;
+        case 9:
+            if (p == NULL) {
+                printf("\nPila Vacia.\n");
+            }
+            else {
+                contador = 0;
+                printf("\nIngrese el numero a buscar en la pila: ");
+                scanf("%d", &numero);
+                apariciones(&p, numero, &contador);
+                if (contador == 0) {
+                    printf("\nEl numero no se encontro en la pila\n");
+                }
+                else {
+                    printf("\nEl numero %d se encontro %d veces en la pila\n", numero, contador);
+                }
+            }
             break;
         default:
             printf("\nCodigo invalido.\n");
@@ -101,7 +155,7 @@ int main()
         printf("\n3. Mostrar pila.");
         printf("\n4. Multiplos de 3.");
         printf("\n5. Promedio divisores 4.");
-        printf("\n6. Sumatoria de elementos promedio del primer elemento.");
+        printf("\n6. Sumatoria de elementos multiplos del primer elemento.");
         printf("\n7. Numero maximo y posicion.");
         printf("\n8. Numero minimo y su posicion.");
         printf("\n9. Cantidad de veces de un numero en pila.");
@@ -208,7 +262,122 @@ void mostrarPila(nodo **p){
     while (pAux != NULL){
         nodo nodoAux = desapilar(&pAux);
         apilar(p, crearNodo(nodoAux.num));
-
     }
+    //al desapilar se borran todos los elementos almacenados en memoria,
+    //y al salir del scope de la funcion se elimina el puntero de la pila auxiliar
+
+}
+
+
+// precond: pila de la que queremos saber cuantos multiplos de tres hay
+int multiplosTres(nodo** p) {
+    int cant = 0;
+
+    while (*p != NULL) {
+        nodo nodoDesapilado = desapilar(p);
+        if (nodoDesapilado.num % 3 == 0) {
+            cant = cant + 1;
+        }
+    }
+    return cant;
+}
+
+
+float promedioDivCuatro(nodo** p) {
+
+    int acumulador = 0;
+    int total = 0;
+    float promedio;
+
+    while (*p != NULL) {
+        total = total + 1;
+        nodo nodoDesapilado = desapilar(p);
+        if (4 % nodoDesapilado.num == 0) {
+            acumulador = acumulador + nodoDesapilado.num;
+        }
+    }
+    if (total != 0) {
+        promedio = (float)acumulador / total;
+    }
+    return promedio;
+}
+
+
+
+int sumatoriaMultiplosPrimero(nodo** p) {
+
+    int primerNum;
+    int sumatoria = 0;
+    nodo nodoDesapilado;
+
+    nodoDesapilado = desapilar(p);
+    primerNum = nodoDesapilado.num;
+
+    while (*p != NULL) {
+        nodoDesapilado = desapilar(p);
+        if (primerNum % nodoDesapilado.num == 0) {
+            sumatoria = sumatoria + nodoDesapilado.num;
+        }
+    }
+
+
+    return sumatoria;
+}
+
+
+void posMax(nodo** p, int *pos, int *max) {
+
+    nodo nodoDesapilado;
+    int i = 1;
+    *pos = 1;
+    nodoDesapilado = desapilar(p);
+    *max = nodoDesapilado.num;
+
+    while (*p != NULL) {
+        i = i + 1;
+        nodoDesapilado = desapilar(p);
+        if (nodoDesapilado.num > *max) {
+            *max = nodoDesapilado.num;
+            *pos = i;
+        }
+    }
+    return;
+}
+
+
+
+void posMin(nodo** p, int* pos, int* min) {
+
+    nodo nodoDesapilado;
+    int i = 1;
+    *pos = 1;
+    nodoDesapilado = desapilar(p);
+    *min = nodoDesapilado.num;
+
+    while (*p != NULL) {
+        i = i + 1;
+        nodoDesapilado = desapilar(p);
+        if (nodoDesapilado.num < *min) {
+            *min = nodoDesapilado.num;
+            *pos = i;
+        }
+    }
+    return;
+
+}
+
+
+
+void apariciones(nodo** p, int numero, int* contador) {
+
+    nodo nodoDesapilado;
+
+    while (*p != NULL) {
+        nodoDesapilado = desapilar(p);
+        if (nodoDesapilado.num = numero) {
+            *contador = *contador +1;
+        }
+    }
+    return;
 
 }
