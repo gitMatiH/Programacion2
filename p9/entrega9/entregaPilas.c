@@ -27,7 +27,7 @@ typedef struct tiponodo
 }nodo;
 
 
-void mostrar(nodo aux);
+void mostrar(nodo );
 nodo* crearNodo(int);
 void apilar(nodo** p,nodo* u);
 nodo desapilar(nodo** p);
@@ -98,8 +98,9 @@ int main()
                 printf("\nPoblar primero la pila:\n");
                 generarPila(&p);
             }
-            promedio = promedioDivCuatro(&p);
-            printf("\nEl promedio de los divisores de cuatro es de: %.2f\n", promedio);
+            //promedio = promedioDivCuatro(&p);
+            //printf("\nEl promedio de los divisores de cuatro es de: %.2f\n", promedio);
+            printf("\nEl promedio de los divisores de cuatro es de: %.2f\n", promedioDivCuatro(&p));
             break;
         case 6:
             if (p == NULL) {
@@ -169,9 +170,9 @@ int main()
 
 
 //DEFINICIONES
-void mostrar(nodo aux)
+void mostrar(nodo a)
 {
-    printf("\n%d\n", aux.num);
+    printf("\n%d\n", a.num);
 }
 
 nodo* crearNodo(int num)
@@ -285,14 +286,16 @@ int multiplosTres(nodo** p) {
 
 float promedioDivCuatro(nodo** p) {
 
+    nodo nodoDesapilado;
     int acumulador = 0;
     int total = 0;
-    float promedio;
+    float promedio = 0;
 
     while (*p != NULL) {
-        total = total + 1;
-        nodo nodoDesapilado = desapilar(p);
+
+        nodoDesapilado = desapilar(p);
         if (4 % nodoDesapilado.num == 0) {
+            total = total + 1;
             acumulador = acumulador + nodoDesapilado.num;
         }
     }
@@ -319,7 +322,6 @@ int sumatoriaMultiplosPrimero(nodo** p) {
             sumatoria = sumatoria + nodoDesapilado.num;
         }
     }
-
 
     return sumatoria;
 }
@@ -374,7 +376,7 @@ void apariciones(nodo** p, int numero, int* contador) {
 
     while (*p != NULL) {
         nodoDesapilado = desapilar(p);
-        if (nodoDesapilado.num = numero) {
+        if (nodoDesapilado.num == numero) {
             *contador = *contador +1;
         }
     }
