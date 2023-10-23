@@ -101,8 +101,12 @@ int main(void) {
     //punto1
     printf("\nLa productoria de los numeros multiplos de 7 es: %d\n", argumentos.prodmult7);
     //punto2
+    if(argumentos.cont2 != 0){
     argumentos.promdivult = ( (float)argumentos.acum2 / argumentos.cont2 );
     printf("\nEl promedio de los divisores del ultimo numero es: %.2f\n", argumentos.promdivult);
+    }else{
+        printf("Error division por cero.");
+    }
     //punto3
     printf("\nLa sumatoria de los divisores del primer numero es: %d\n", argumentos.sumdivprimer);
     //punto4
