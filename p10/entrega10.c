@@ -18,7 +18,7 @@ int main ()
 {
     int n,raiz,resultado;
     int max, cont=0, sum=0, c=0;
-    float prom;
+    float prom = 0;
 
 
     printf ("ARBOLES\n");
@@ -38,7 +38,7 @@ int main ()
     printf("La cantidad de nodos con dos hijos divisores de la raiz es: %d\n",cont);
     
     //printf("sum: %d\n c: %d\n",sum,c);
-    prom = (float)sum/c;
+    if(c!=0){ prom = (float)sum / c; }
     printf("El promedio de nodos pares con un solo hijo es: %.2f\n", prom);
 
     /*printf("Introducir el numero que desea buscar: ");
