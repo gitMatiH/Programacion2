@@ -55,13 +55,14 @@ void ordenar(nodo* actual)
      nodo *siguiente;
      nodo *aux=(nodo*)malloc(sizeof(nodo));
 
-     while(actual->sig != NULL)
+     while(actual->sig != NULL) //el actual ya empieza en cero y NULL sería el 10 (i<10)
      {
-          siguiente = actual->sig;
+          siguiente = actual->sig;  //hace de j=0
 
-          while(siguiente->sig !=NULL)
+          //busca el mas chico y lo swappea siempre al primer lugar, ascendiendo
+          while(siguiente->sig !=NULL)  //(j<10)
           {
-               if(actual->num > siguiente->num)
+               if(actual->num > siguiente->num) //(o al reves)
                {
                     //swap
                     aux->num        =   siguiente->num;
@@ -70,9 +71,10 @@ void ordenar(nodo* actual)
                }
                siguiente = siguiente->sig;
           }
+          //quedó el mas grande (o mas chico) y avanzamos un nodo
           actual = actual->sig;
 
-     }
+     }//quedo ordenado y como solo swappeamos los contenidos la estructura quedó intacta. y no hace falta devolver nada
 };
 
 
