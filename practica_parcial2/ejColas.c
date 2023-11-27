@@ -1,12 +1,12 @@
 /*
 
-Ingresar números enteros a una cola hasta que el valor sea igual a cero.
+Ingresar nÃºmeros enteros a una cola hasta que el valor sea igual a cero.
 Calcular y mostrar:
-	a) La suma de los divisores del segundo número ingresado a la cola.
-	b) El valor mínimo de la cola y su posición.
+	a) La suma de los divisores del segundo nÃºmero ingresado a la cola.
+	b) El valor mÃ­nimo de la cola y su posiciÃ³n.
 	Si esta repetido mostrar la cantidad de veces que se repite.
-	c) Si la cola tiene una cantidad de números pares,
-	mostrar la suma de los términos centrales, de lo contrario,
+	c) Si la cola tiene una cantidad de nÃºmeros pares,
+	mostrar la suma de los tÃ©rminos centrales, de lo contrario,
 	mostrar el termino central.
 
 	pares: n=10
@@ -152,7 +152,7 @@ void acolar(nodo** p, nodo** u, nodo* q) {
 
 	printf("acolar_nodo\n");
 	if (*p == NULL) {
-		//crea o "desvacía" la cola. Ppio y final son el mismo.
+		//crea o "desvacÃ­a" la cola. Ppio y final son el mismo.
 		*p = *u = q;
 	}
 	else {
@@ -197,6 +197,17 @@ void mostrar(nodo aux, int segundo, int* sumatoria_divisores, int min, int* min_
 	if (aux.num == min) {
 		*min_cant = *min_cant + 1;
 	}
+
+/*
+	if(aux.num < *min) {
+        	*min = aux.num;
+        	*pos_min = pos;
+	 	*min_cant = 0;
+	}
+	if (aux.num == *min) {
+		*min_cant = *min_cant + 1;
+	}
+*/
 
 	if (long_cola % 2 == 0) {
 		//caso cant de elementos pares
